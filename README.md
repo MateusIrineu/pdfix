@@ -1,4 +1,4 @@
-PDFix - Orçamentos Profissionais Instantâneos
+PDFix - Curriculos Profissionais Instantâneos
 O PDFix é uma solução focada em resolver o "Amadorismo Caro". Ele permite que prestadores de serviços autônomos e freelancers formalizem curriculos, transmitindo maior credibilidade e profissionalismo para seus clientes.
 
 
