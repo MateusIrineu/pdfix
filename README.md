@@ -18,7 +18,7 @@ Pagamento por uso (pay-per-use): Sem assinaturas mensais caras.
 Integração Pix: Automação de cobrança dentro do PDF.
 
 🛠️ Funcionalidades do MVP
-O projeto conta com um fluxo de 5 a 12 telas projetadas para alta eficiência:
+O projeto conta com um fluxo de 7 telas projetadas para alta eficiência:
 
 
 Landing Page: Explicação do serviço e exemplos "antes e depois".
