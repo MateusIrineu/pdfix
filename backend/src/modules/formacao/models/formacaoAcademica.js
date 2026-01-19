@@ -1,38 +1,54 @@
 import _sequelize from 'sequelize';
 const { Model, Sequelize } = _sequelize;
 
-export default class usuario extends Model {
+export default class formacaoAcademica extends Model {
   static init(sequelize, DataTypes) {
   return super.init({
-    usuario_id: {
-      autoIncrement: true,
+    formacao_id: {
       type: DataTypes.INTEGER,
       allowNull: false,
+      autoIncrement: true,
       primaryKey: true
     },
-    nome: {
+    usuario_id: {
+      type: DataTypes.UUIDV4,
+      allowNull: false,
+      references: {
+        model: 'usuario',
+        key: 'usuario_id'
+      }
+    },
+    instituicao: {
       type: DataTypes.STRING(255),
       allowNull: false
     },
-    email: {
+    curso: {
       type: DataTypes.STRING(255),
-      allowNull: false,
-      unique: "usuario_email_key"
+      allowNull: false
     },
-    telefone: {
-      type: DataTypes.STRING(50),
+    nivel: {
+      type: DataTypes.STRING(100),
       allowNull: true
     },
-    endereco: {
+    area_estudo: {
       type: DataTypes.STRING(255),
       allowNull: true
     },
-    idade: {
-      type: DataTypes.INTEGER,
+    data_inicio: {
+      type: DataTypes.DATEONLY,
       allowNull: true
     },
-    linkedin_url: {
-      type: DataTypes.STRING(255),
+    data_fim: {
+      type: DataTypes.DATEONLY,
+      allowNull: true
+    },
+    concluido: {
+      type: DataTypes.BOOLEAN,
+      allowNull: true,
+      defaultValue: false
+    },
+    descricao: {
+      type: DataTypes.TEXT,
       allowNull: true
     },
     criado_em: {
@@ -47,20 +63,19 @@ export default class usuario extends Model {
     }
   }, {
     sequelize,
-    tableName: 'usuario',
+    tableName: 'formacao_academica',
     schema: 'public',
     timestamps: false,
     indexes: [
       {
-        name: "usuario_email_key",
+        name: "formacao_academica_pkey",
         unique: true,
         fields: [
-          { name: "email" },
+          { name: "formacao_id" },
         ]
       },
       {
-        name: "usuario_pkey",
-        unique: true,
+        name: "idx_formacao_usuario",
         fields: [
           { name: "usuario_id" },
         ]
