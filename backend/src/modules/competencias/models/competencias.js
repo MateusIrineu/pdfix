@@ -7,13 +7,12 @@ export default class competencias extends Model {
       {
         competencia_id: {
           autoIncrement: true,
-          type: DataTypes.UUIDV4,
-          defaultValue: DataTypes.UUIDV4,
+          type: DataTypes.INTEGER,
           allowNull: false,
           primaryKey: true,
         },
         usuario_id: {
-          type: DataTypes.UUIDV4,
+          type: DataTypes.UUID,
           allowNull: false,
           references: {
             model: "usuario",

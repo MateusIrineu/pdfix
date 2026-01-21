@@ -6,10 +6,10 @@ import _formacaoAcademica from  "../modules/formacao/models/formacaoAcademica.js
 import _usuario from  "../modules/usuario/models/usuario.js";
 
 export default function initModels(sequelize) {
+  const usuario = _usuario.init(sequelize, DataTypes);
   const competencias = _competencias.init(sequelize, DataTypes);
   const experienciasProfissionais = _experienciasProfissionais.init(sequelize, DataTypes);
   const formacaoAcademica = _formacaoAcademica.init(sequelize, DataTypes);
-  const usuario = _usuario.init(sequelize, DataTypes);
 
   competencias.belongsTo(usuario, { as: "usuario", foreignKey: "usuario_id"});
   usuario.hasMany(competencias, { as: "competencia", foreignKey: "usuario_id"});
@@ -19,9 +19,9 @@ export default function initModels(sequelize) {
   usuario.hasMany(formacaoAcademica, { as: "formacao_academicas", foreignKey: "usuario_id"});
 
   return {
+    usuario,
     competencias,
     experienciasProfissionais,
     formacaoAcademica,
-    usuario,
   };
 }

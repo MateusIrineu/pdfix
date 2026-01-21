@@ -20,13 +20,18 @@ app.use(cors());
 app.use(express.json());
 
 
-
 // Testa a conexão com o banco
-sequelize
-  .authenticate()
-  .then(() => console.log("Banco conectado com sucesso!"))
-  .catch((err) => console.error("Erro ao conectar:", err));
-
+try {
+  await sequelize.authenticate();
+  console.log("✅ Banco conectado com sucesso!");
+  
+  // ⚠️ CUIDADO: force: true apaga todas as tabelas!
+  // Use apenas em desenvolvimento
+  await sequelize.sync({ force: false });
+  console.log("✅ Tabelas sincronizadas!");
+} catch (err) {
+  console.error("❌ Erro ao conectar:", err);
+}
 // Porta do servidor
-const PORT = 5432;
+const PORT = 3000;
 app.listen(PORT, () => console.log(`Servidor rodando na porta ${PORT}`));

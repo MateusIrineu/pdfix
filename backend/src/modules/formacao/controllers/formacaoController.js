@@ -1,25 +1,24 @@
 import { models } from "../../../database/index.js";
 
-const formacaoController = models.formacaoAcademica;
+const formacaoModel = models.formacaoAcademica;
 
 class FormacaoController {
   static async criarFormacaoAcademica(req, res) {
     try {
-      const { instituicao, curso, nivel, area_estudo } = req.body;
+      const {usuario_id,  instituicao, curso, nivel, area_estudo } = req.body;
 
-      const formacao = await formacaoController.create(
+      const formacao = await formacaoModel.create(
+        usuario_id,
         instituicao,
         curso,
         nivel,
         area_estudo,
       );
 
-      return res
-        .status(200)
-        .json({
-          mensagem: "Formação acadêmica criada com sucesso!",
-          formacao: formacao,
-        });
+      return res.status(200).json({
+        mensagem: "Formação acadêmica criada com sucesso!",
+        formacao: formacao,
+      });
     } catch (error) {
       res.status(500).json({
         mensagem: "Erro ao cadastrar usuário.",
@@ -30,7 +29,7 @@ class FormacaoController {
 
   static async listarFormacoes(req, res) {
     try {
-      const listarFormacao = await formacaoController.findAll();
+      const listarFormacao = await formacaoModel.findAll();
 
       if (listarFormacao === 0) {
         res.status(400).json({
@@ -52,7 +51,7 @@ class FormacaoController {
     try {
       const { formacao_id } = req.params;
 
-      const buscarId = await formacaoController.findByPk(formacao_id);
+      const buscarId = await formacaoModel.findByPk(formacao_id);
       if (!buscarId) {
         res.status(400).json({
           mensagem: "Formação não encontrada.",
@@ -75,14 +74,14 @@ class FormacaoController {
   static async atualizarFormacao(req, res) {
     try {
       const { formacao_id } = req.params;
-      const buscarId = await formacaoController.findByPk(formacao_id);
+      const buscarId = await form.findByPk(formacao_id);
       if (!buscarId) {
         return res.status(404).json({ mensagem: "Formação não encontrado." });
       }
       const formacaoAtualizada = { instituicao, curso, nivel, area_estudo };
       const { instituicao, curso, nivel, area_estudo } = req.body;
 
-      const attFormacao = await formacaoController.update(formacaoAtualizada, {
+      const attFormacao = await formacaoModel.update(formacaoAtualizada, {
         where: { formacao_id },
       });
 
@@ -102,7 +101,7 @@ class FormacaoController {
     try {
       const { formacao_id } = req.params;
 
-      const formacao = await formacaoController.findByPk(formacao_id);
+      const formacao = await formacaoModel.findByPk(formacao_id);
       if (!formacao_id) {
         return res.status(404).json({ mensagem: "Formação não encontrado." });
       }
@@ -118,7 +117,7 @@ class FormacaoController {
 
   static async deletarTodasFormacoes(req, res) {
     try {
-      await formacaoController.destroy();
+      await formacaoModel.destroy();
     } catch (error) {
       res.status(500).json({
         mensagem: "Erro ao listar usuários.",
@@ -127,3 +126,5 @@ class FormacaoController {
     }
   }
 }
+
+export default FormacaoController;

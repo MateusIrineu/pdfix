@@ -54,7 +54,7 @@ class UsuarioController {
       const listarUsuario = await usuarioModel.findAll({
         attributes: { exclude: ["senha"] },
       });
-      if (usuarios.length === 0) {
+      if (listarUsuario.length === 0) {
         return res.status(200).json({ mensagem: "Nenhum usuário encontrado." });
       }
 
@@ -86,13 +86,13 @@ class UsuarioController {
   static async atualizarUsuario(req, res) {
     try {
       const { id } = req.params;
-      const { nome, email, senha_hash, tipo_usuario } = req.body;
+      const { nome, email, senha, tipo_usuario } = req.body;
 
       const usuario = await usuarioModel.findByPk(id);
       if (!usuario) {
         return res.status(404).json({ mensagem: "Usuário não encontrado." });
       }
-      const dadosAtualizados = { nome, email, tipo_usuario };
+      const dadosAtualizados = { nome, email, senha, tipo_usuario };
       await usuarioModel.update(dadosAtualizados, { where: { id } });
 
       const usuarioAtualizado = await usuarioModel.findByPk(id, {
@@ -132,4 +132,4 @@ class UsuarioController {
   }
 }
 
-export default atualizarUsuario;
+export default UsuarioController;

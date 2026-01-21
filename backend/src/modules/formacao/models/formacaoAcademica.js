@@ -11,7 +11,7 @@ export default class formacaoAcademica extends Model {
       primaryKey: true
     },
     usuario_id: {
-      type: DataTypes.UUIDV4,
+      type: DataTypes.UUID,
       allowNull: false,
       references: {
         model: 'usuario',

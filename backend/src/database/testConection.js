@@ -2,15 +2,10 @@ import { Sequelize } from "sequelize";
 import initModels from "./init-models.js";
 
 // Cria a conexão com o banco
-const sequelize = new Sequelize(
-  "pdfix_db",
-  "postgres",
-  "BemVindo!",
-  {
-    host: "localhost",
-    dialect: "postgres",
-  }
-);
+const sequelize = new Sequelize("pdfix_db", "postgres", "BemVindo!", {
+  host: "localhost",
+  dialect: "postgres",
+});
 
 // Inicializa os models
 const models = initModels(sequelize);
@@ -20,10 +15,6 @@ async function testarConexao() {
   try {
     await sequelize.authenticate();
     console.log("Conexão com o banco estabelecida com sucesso!");
-
-    // Conta quantos registros existem na tabela
-    const total = await models.usuario.count();
-    console.log(`Existem ${total} usuarios cadastrados no banco.`);
   } catch (error) {
     console.error("Erro ao conectar ao banco:", error);
   } finally {

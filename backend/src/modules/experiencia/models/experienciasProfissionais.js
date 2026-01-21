@@ -1,7 +1,7 @@
 import _sequelize from 'sequelize';
 const { Model, Sequelize } = _sequelize;
 
-export default class experiencias_profissionais extends Model {
+export default class experiencia_profissional extends Model {
   static init(sequelize, DataTypes) {
   return super.init({
     experiencia_id: {
@@ -11,7 +11,7 @@ export default class experiencias_profissionais extends Model {
       primaryKey: true
     },
     usuario_id: {
-      type: DataTypes.INTEGER,
+      type: DataTypes.UUID,
       allowNull: false,
       references: {
         model: 'usuario',
@@ -43,11 +43,7 @@ export default class experiencias_profissionais extends Model {
       allowNull: true,
       defaultValue: false
     },
-    responsabilidades: {
-      type: DataTypes.TEXT,
-      allowNull: true
-    },
-    conquistas: {
+    sobre: {
       type: DataTypes.TEXT,
       allowNull: true
     },
@@ -63,24 +59,9 @@ export default class experiencias_profissionais extends Model {
     }
   }, {
     sequelize,
-    tableName: 'experiencias_profissionais',
+    tableName: 'experiencia_profissional',
     schema: 'public',
     timestamps: false,
-    indexes: [
-      {
-        name: "experiencias_profissionais_pkey",
-        unique: true,
-        fields: [
-          { name: "experiencia_id" },
-        ]
-      },
-      {
-        name: "idx_experiencia_usuario",
-        fields: [
-          { name: "usuario_id" },
-        ]
-      },
-    ]
   });
   }
 }
