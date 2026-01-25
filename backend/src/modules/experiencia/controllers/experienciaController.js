@@ -30,7 +30,7 @@ class ExperienciaController {
           .json({ mensagem: "Todos os campos são obrigatórios." });
       }
 
-      const experiencia = await experienciaModel.create(
+      const experiencia = await experienciaModel.create({
         usuario_id,
         titulo_cargo,
         empresa,
@@ -39,7 +39,7 @@ class ExperienciaController {
         data_fim,
         atual,
         sobre,
-      );
+      });
 
       res.status(201).json({
         mensagem: "Experiencia Registrada com Sucesso!",
@@ -116,7 +116,7 @@ class ExperienciaController {
     }
   }
 
-  static async deletarExperiencias() {
+  static async deletarExperiencias(req, res) {
     try {
       const { experiencia_id } = req.params;
 
@@ -126,9 +126,26 @@ class ExperienciaController {
           .status(404)
           .json({ mensagem: "Experiência não encontrada para exclusão." });
       }
+      await experiencia.destroy();
+      res.status(200).json({
+        mensagem: "Experiencia Deletada!",
+      });
     } catch (error) {
       res.status(500).json({
         mensagem: "Erro ao excluir Experiência.",
+        erro: error.message,
+      });
+    }
+  }
+  static async deletarTodasExperiencias(req, res) {
+    try {
+      await experienciaModel.truncate();
+      res.status(200).json({
+        mensagem: "Experiencias Deletadas com sucesso!",
+      });
+    } catch (error) {
+      res.status(500).json({
+        mensagem: "Erro ao Deletar Formações.",
         erro: error.message,
       });
     }
