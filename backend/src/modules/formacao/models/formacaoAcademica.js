@@ -1,17 +1,17 @@
 import _sequelize from 'sequelize';
 const { Model, Sequelize } = _sequelize;
 
-export default class formacao_academica extends Model {
+export default class formacaoAcademica extends Model {
   static init(sequelize, DataTypes) {
   return super.init({
     formacao_id: {
-      type: DataTypes.UUID,
+      type: DataTypes.INTEGER,
       allowNull: false,
-      defaultValue: DataTypes.UUIDV4,
+      autoIncrement: true,
       primaryKey: true
     },
     usuario_id: {
-      type: DataTypes.INTEGER,
+      type: DataTypes.UUID,
       allowNull: false,
       references: {
         model: 'usuario',
