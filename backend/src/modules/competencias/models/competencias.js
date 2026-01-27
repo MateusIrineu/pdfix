@@ -6,8 +6,8 @@ export default class competencias extends Model {
     return super.init(
       {
         competencia_id: {
-          autoIncrement: true,
-          type: DataTypes.INTEGER,
+          defaultValue: DataTypes.UUIDV4,
+          type: DataTypes.UUID,
           allowNull: false,
           primaryKey: true,
         },
