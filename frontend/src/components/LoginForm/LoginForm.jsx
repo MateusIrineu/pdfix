@@ -72,7 +72,7 @@ export default function LoginForm() {
             <input
               id="email"
               type="email"
-              placeholder="seu@email.com"
+              placeholder="Digite seu email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               className={styles.input}
@@ -92,7 +92,7 @@ export default function LoginForm() {
             <input
               id="password"
               type={showPassword ? 'text' : 'password'}
-              placeholder="••••••••"
+              placeholder="Digite sua senha"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               className={styles.input}
