@@ -56,7 +56,7 @@ export default function CurriculoForm() {
 
       <section className="bg-white rounded-xl p-6 shadow mb-8">
         <label className="text-sm text-slate-600 block mb-2">Observações <span className="text-sm text-slate-400">(opcional)</span></label>
-        <textarea className="w-full border border-gray-200 rounded-lg p-3 text-sm min-h-[120px] placeholder:text-slate-400" placeholder="Informações adicionais, condições de pagamento, prazo, etc." />
+        <textarea className="w-full border border-gray-200 rounded-lg p-3 text-sm min-h-30 placeholder:text-slate-400" placeholder="Informações adicionais, condições de pagamento, prazo, etc." />
       </section>
 
       <div className="mb-12">
