@@ -1,4 +1,5 @@
 import React from "react";
+import Link from "next/link";
 
 export default function HomePage() {
   return (
@@ -12,8 +13,8 @@ export default function HomePage() {
         </p>
 
         <div className="mt-8 flex items-center justify-center gap-4">
-          <a className="bg-violet-600 text-white px-6 py-3 rounded-full shadow hover:opacity-95" href="/curriculo">Criar Currículo Grátis →</a>
-          <a className="text-zinc-600 self-center" href="#">Já tenho conta</a>
+          <Link className="bg-violet-600 text-white px-6 py-3 rounded-full shadow hover:opacity-95" href="/curriculo">Criar Currículo Grátis →</Link>
+          <Link className="text-zinc-600 self-center" href="#">Já tenho conta</Link>
         </div>
       </section>
 
@@ -74,7 +75,7 @@ export default function HomePage() {
         <div className="max-w-4xl mx-auto px-6 text-center">
           <div className="text-5xl text-white font-extrabold">Comece agora e impressione recrutadores</div>
           <div className="mt-20">
-            <a className="bg-white text-violet-600 px-6 py-3 rounded-full shadow font-semibold" href="#">Criar Meu Primeiro Currículo →</a>
+            <Link className="bg-white text-violet-600 px-6 py-3 rounded-full shadow font-semibold" href="#">Criar Meu Primeiro Currículo →</Link>
           </div>
         </div>
       </section>
