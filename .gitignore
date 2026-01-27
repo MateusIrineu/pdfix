@@ -30,3 +30,25 @@ tmp/
 .DS_Store
 Thumbs.db
 .vscode/
+
+# Sensitive data
+*.env
+*.env.*
+*.key
+*.pem
+*.crt
+*.pfx
+*.jks
+*.keystore
+*.p12
+*.json
+!frontend/package.json
+!backend/package.json
+# Firebase admin credentials
+*firebase-adminsdk*.json
+# Database
+*.sqlite
+*.db
+*.db3
+*.sql
+*.bak
