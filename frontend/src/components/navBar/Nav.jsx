@@ -11,7 +11,7 @@ export default function Nav() {
       <nav className="flex items-center gap-6">
         <a className="text-violet-600 font-medium" href="/">Início</a>
         <a className="text-zinc-600 hover:text-violet-600" href="/curriculo">Criar Currículo</a>
-        <a className="px-4 py-2 rounded-md border border-violet-500 text-violet-600" href="#">Começar Grátis</a>
+        <a className="px-4 py-2 rounded-md border border-violet-500 text-violet-600" href="/login">Começar Grátis</a>
       </nav>
     </header>
   );
