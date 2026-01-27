@@ -15,7 +15,17 @@
     "react-dom": "19.2.3"
   },
   "devDependencies": {
+<<<<<<< HEAD
+    "@babel/cli": "^7.28.6",
+    "@babel/core": "^7.28.6",
+    "@babel/preset-react": "^7.28.5",
+    "@babel/preset-typescript": "^7.28.5",
+    "@tailwindcss/postcss": "^4",
+    "@types/node": "25.0.10",
+    "@types/react": "19.2.9",
+=======
     "autoprefixer": "^10.4.23",
+>>>>>>> origin/develop
     "eslint": "^9",
     "eslint-config-next": "16.1.5",
     "postcss": "^8.5.6"
