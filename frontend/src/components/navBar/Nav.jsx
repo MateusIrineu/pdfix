@@ -1,4 +1,5 @@
 import React from "react";
+import Link from "next/link";
 
 export default function Nav() {
   return (
@@ -9,9 +10,9 @@ export default function Nav() {
       </div>
 
       <nav className="flex items-center gap-6">
-        <a className="text-violet-600 font-medium" href="/">Início</a>
-        <a className="text-zinc-600 hover:text-violet-600" href="/curriculo">Criar Currículo</a>
-        <a className="px-4 py-2 rounded-md border border-violet-500 text-violet-600" href="/login">Começar Grátis</a>
+        <Link className="text-violet-600 font-medium" href="/">Início</Link>
+        <Link className="text-zinc-600 hover:text-violet-600" href="/curriculo">Criar Currículo</Link>
+        <Link className="px-4 py-2 rounded-md border border-violet-500 text-violet-600" href="/login">Começar Grátis</Link>
       </nav>
     </header>
   );

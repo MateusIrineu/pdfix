@@ -70,7 +70,7 @@ export default function HomePage() {
       </section>
 
       {/* Purple CTA */}
-      <section className="bg-gradient-to-r from-violet-600 to-violet-500 py-16">
+      <section className="bg-linear-to-r from-violet-600 to-violet-500 py-16">
         <div className="max-w-4xl mx-auto px-6 text-center">
           <div className="text-5xl text-white font-extrabold">Comece agora e impressione recrutadores</div>
           <div className="mt-20">
