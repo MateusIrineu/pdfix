@@ -1,9 +1,8 @@
 import LoginForm from '@/components/LoginForm/LoginForm';
-import styles from './login.module.css';
 
 export default function LoginPage() {
   return (
-    <div className={styles.container}>
+    <div className="min-h-screen flex items-center justify-center bg-[var(--color-bg-light)] p-5 transition-colors duration-300">
       <LoginForm />
     </div>
   );

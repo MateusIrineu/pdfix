@@ -1,34 +1,10 @@
 "use client";
 
-import { useState, useEffect } from "react";
 import { FaSun, FaMoon } from "react-icons/fa";
+import { useThemeToggle } from "./ThemeToggle.func";
 
 export default function ThemeToggle() {
-  const [darkMode, setDarkMode] = useState(false);
-
-  useEffect(() => {
-    // Verificar preferência salva - modo claro é o padrão
-    const savedTheme = localStorage.getItem("theme");
-
-    if (savedTheme === "dark") {
-      setDarkMode(true);
-      document.documentElement.classList.add("dark");
-    } else {
-      setDarkMode(false);
-      document.documentElement.classList.remove("dark");
-    }
-  }, []);
-
-  const toggleTheme = () => {
-    setDarkMode(!darkMode);
-    if (!darkMode) {
-      document.documentElement.classList.add("dark");
-      localStorage.setItem("theme", "dark");
-    } else {
-      document.documentElement.classList.remove("dark");
-      localStorage.setItem("theme", "light");
-    }
-  };
+  const { darkMode, toggleTheme } = useThemeToggle();
 
   return (
     <button

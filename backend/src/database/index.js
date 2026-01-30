@@ -8,7 +8,7 @@ import initModels from "./init-models.js";
 const sequelize = new Sequelize(
   "pdfix_db", // nome do banco de dados
   "postgres", // usuário do banco
-  "shaco2", // senha do usuário
+  "BemVindo!", // senha do usuário
   {
     host: "localhost", // endereço do servidor do banco
     dialect: "postgres", // tipo do banco de dados

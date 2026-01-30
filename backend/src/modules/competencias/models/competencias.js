@@ -31,11 +31,6 @@ export default class competencias extends Model {
           type: DataTypes.STRING(50),
           allowNull: true,
         },
-        //remover depois
-        anos_experiencia: {
-          type: DataTypes.INTEGER,
-          allowNull: true,
-        },
         descricao: {
           type: DataTypes.TEXT,
           allowNull: true,

@@ -1,14 +1,55 @@
-import { FaUser } from "react-icons/fa";
+'use client';
+
+import { FaUser, FaFilePdf, FaEye, FaLock } from "react-icons/fa";
 import { CgNotes } from "react-icons/cg";
 import { FaUserGraduate } from "react-icons/fa";
+import { useCurriculoForm } from "./CurriculoForm.func";
 
 export default function CurriculoForm() {
+  const {
+    loading,
+    error,
+    success,
+    pagamentoAtivo,
+    verificandoPagamento,
+    handleVisualizarPDF,
+    handleGerarPDF,
+  } = useCurriculoForm();
+
   const inputClass = "w-full border border-[var(--color-border)] bg-[var(--color-bg)] text-[var(--color-text)] rounded-lg p-3 text-sm transition-colors duration-300";
   const labelClass = "text-sm text-[var(--color-text-light)] block mb-2";
   const sectionClass = "bg-[var(--color-bg-card)] border border-[var(--color-border)] rounded-xl p-6 shadow mb-6 transition-colors duration-300";
 
   return (
     <main className="max-w-3xl mx-auto px-4">
+      {error && (
+        <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">
+          {error}
+        </div>
+      )}
+      {success && (
+        <div className="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded mb-4">
+          {success}
+        </div>
+      )}
+
+      {/* Alerta de pagamento */}
+      {!verificandoPagamento && !pagamentoAtivo && (
+        <div className="bg-yellow-100 dark:bg-yellow-900/30 border border-yellow-400 dark:border-yellow-600 px-4 py-3 rounded mb-4 flex items-center gap-3">
+          <FaLock className="text-2xl text-yellow-800 dark:text-yellow-300" />
+          <div className="flex-1">
+            <p className="font-semibold text-yellow-800 dark:text-yellow-200">Acesso Limitado</p>
+            <p className="text-sm text-yellow-700 dark:text-yellow-300">Você pode visualizar uma prévia, mas precisa fazer o pagamento para baixar o currículo completo.</p>
+          </div>
+          <button
+            onClick={() => window.location.href = '/pagamento'}
+            className="bg-yellow-600 hover:bg-yellow-700 text-white font-semibold py-2 px-4 rounded transition-colors"
+          >
+            Fazer Pagamento
+          </button>
+        </div>
+      )}
+
       <h1 className="text-4xl font-extrabold text-center text-[#8E51FF] mb-3">
         Criar Currículo
       </h1>
@@ -233,10 +274,44 @@ export default function CurriculoForm() {
         </div>
       </section>
 
-      <div className="mb-12">
-        <button className="w-full bg-violet-600 hover:bg-violet-700 cursor-pointer text-white font-semibold py-4 rounded-xl transition-colors duration-300">
-          Visualizar Currículo →
+      {/* Botão único original ao final */}
+      <div className="mb-6">
+        <button 
+          onClick={handleVisualizarPDF}
+          disabled={loading || verificandoPagamento}
+          className="w-full flex items-center justify-center gap-2 bg-violet-600 hover:bg-violet-700 disabled:bg-gray-400 disabled:cursor-not-allowed cursor-pointer text-white dark:!text-white font-semibold py-4 rounded-xl transition-colors duration-300"
+          style={{ color: '#ffffff' }}
+        >
+          <FaEye />
+          {loading ? 'Gerando...' : 'Visualizar Currículo →'}
         </button>
+        <p className="text-xs text-[var(--color-text-light)] dark:text-gray-300 text-center mt-2">
+          {pagamentoAtivo 
+            ? 'Visualize uma prévia do seu currículo antes de baixar' 
+            : '⚠️ Visualização limitada - Faça o pagamento para acesso completo'}
+        </p>
+      </div>
+
+      {/* Botões de ação - Download só aparece se pagou */}
+      <div className="flex justify-center mb-12">
+        {pagamentoAtivo ? (
+          <button 
+            onClick={handleGerarPDF}
+            disabled={loading || verificandoPagamento}
+            className="flex items-center justify-center gap-2 bg-green-600 hover:bg-green-700 disabled:bg-gray-400 disabled:cursor-not-allowed cursor-pointer text-white font-semibold py-4 px-8 rounded-xl transition-colors duration-300"
+          >
+            <FaFilePdf />
+            {loading ? 'Gerando...' : 'Baixar Currículo PDF'}
+          </button>
+        ) : (
+          <button 
+            onClick={() => window.location.href = '/pagamento'}
+            className="flex items-center justify-center gap-2 bg-yellow-600 hover:bg-yellow-700 text-white font-semibold py-4 px-8 rounded-xl transition-colors duration-300"
+          >
+            <FaLock />
+            Desbloquear Download Completo
+          </button>
+        )}
       </div>
     </main>
   );

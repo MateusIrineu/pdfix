@@ -25,6 +25,12 @@ html.dark {
   --color-white: #0f172a;
 }
 
+/* Forçar texto branco em botões e links com fundo roxo no modo escuro */
+html.dark button,
+html.dark a[class*="bg-violet"] {
+  color: #ffffff !important;
+}
+
 html {
   scroll-behavior: smooth;
   background-color: var(--color-bg);

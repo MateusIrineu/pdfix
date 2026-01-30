@@ -1,71 +1,57 @@
 'use client';
 
-import { useState } from 'react';
-import { signInWithPopup } from 'firebase/auth';
-import { auth, googleProvider } from '@/lib/firebase';
-import { useRouter } from 'next/navigation';
-import styles from './LoginForm.module.css';
 import Link from 'next/link';
+import { useLoginForm } from './LoginForm.func';
 
 export default function LoginForm() {
-  const router = useRouter();
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [showPassword, setShowPassword] = useState(false);
-  const [rememberMe, setRememberMe] = useState(false);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState('');
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    
-    // TODO: Implementar lógica de autenticação
-    console.log('Login:', { email, password, rememberMe });
-  };
-
-  const handleGoogleLogin = async () => {
-    try {
-      setLoading(true);
-      setError('');
-      const result = await signInWithPopup(auth, googleProvider);
-      console.log('Usuário logado:', result.user);
-      // TODO: Redirecionar para dashboard ou home
-    } catch (error) {
-      console.error('Erro ao fazer login com Google:', error);
-      
-      // Se o usuário cancelou o login (fechou a janela)
-      if (error.code === 'auth/popup-closed-by-user' || error.code === 'auth/cancelled-popup-request') {
-        setError('');
-        router.refresh(); // Recarrega a página atual
-      } else {
-        setError('Erro ao fazer login com Google. Tente novamente.');
-      }
-    } finally {
-      setLoading(false);
-    }
-  };
+  const {
+    email,
+    password,
+    showPassword,
+    rememberMe,
+    loading,
+    error,
+    setEmail,
+    setPassword,
+    setRememberMe,
+    handleSubmit,
+    handleGoogleLogin,
+    togglePasswordVisibility,
+  } = useLoginForm();
 
   return (
-    <div className={styles.card}>
-      <div className={styles.header}>
-        <div className={styles.logo}>
-          <div className={styles.logoIcon}>
+    <div className="bg-[var(--color-bg-card)] border border-[var(--color-border)] rounded-2xl shadow-xl p-12 max-w-md w-full transition-colors duration-300">
+      {/* Header */}
+      <div className="text-center mb-8">
+        <div className="flex items-center justify-center gap-3 mb-6">
+          <div className="w-12 h-12 bg-gradient-to-br from-[#7c3aed] to-[#a78bfa] rounded-xl flex items-center justify-center text-white">
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
               <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" fill="currentColor"/>
               <polyline points="14,2 14,8 20,8" fill="currentColor"/>
             </svg>
           </div>
-          <span className={styles.logoText}>PDFix</span>
+          <span className="text-2xl font-bold text-[var(--color-text)]">PDFix</span>
         </div>
-        <h1 className={styles.title}>Bem-vindo de volta!</h1>
-        <p className={styles.subtitle}>Entre para acessar seus orçamentos</p>
+        <h1 className="text-3xl font-bold text-[var(--color-text)] mb-2">Bem-vindo de volta!</h1>
+        <p className="text-[var(--color-text-light)]">Entre para acessar seus orçamentos</p>
       </div>
 
-      <form className={styles.form} onSubmit={handleSubmit}>
-        <div className={styles.inputGroup}>
-          <label htmlFor="email" className={styles.label}>E-mail</label>
-          <div className={styles.inputWrapper}>
-            <svg className={styles.inputIcon} width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+      {/* Form */}
+      <form className="flex flex-col gap-5" onSubmit={handleSubmit}>
+        {/* Email Input */}
+        <div className="flex flex-col gap-2">
+          <label htmlFor="email" className="text-sm font-semibold text-[var(--color-text)]">
+            E-mail
+          </label>
+          <div className="relative flex items-center">
+            <svg 
+              className="absolute left-4 text-[var(--color-text-light)] pointer-events-none" 
+              width="20" 
+              height="20" 
+              viewBox="0 0 24 24" 
+              fill="none" 
+              stroke="currentColor"
+            >
               <rect x="3" y="5" width="18" height="14" rx="2" strokeWidth="2"/>
               <path d="M3 7l9 6 9-6" strokeWidth="2"/>
             </svg>
@@ -75,16 +61,26 @@ export default function LoginForm() {
               placeholder="Digite seu email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              className={styles.input}
+              className="w-full pl-12 pr-4 py-3 text-[15px] border-2 border-[var(--color-border)] rounded-lg outline-none transition-all duration-200 bg-[var(--color-bg)] text-[var(--color-text)] placeholder:text-[var(--color-text-light)] focus:border-[#7c3aed] focus:shadow-[0_0_0_3px_rgba(124,58,237,0.1)]"
               required
             />
           </div>
         </div>
 
-        <div className={styles.inputGroup}>
-          <label htmlFor="password" className={styles.label}>Senha</label>
-          <div className={styles.inputWrapper}>
-            <svg className={styles.inputIcon} width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+        {/* Password Input */}
+        <div className="flex flex-col gap-2">
+          <label htmlFor="password" className="text-sm font-semibold text-[var(--color-text)]">
+            Senha
+          </label>
+          <div className="relative flex items-center">
+            <svg 
+              className="absolute left-4 text-[var(--color-text-light)] pointer-events-none" 
+              width="20" 
+              height="20" 
+              viewBox="0 0 24 24" 
+              fill="none" 
+              stroke="currentColor"
+            >
               <rect x="5" y="11" width="14" height="10" rx="2" strokeWidth="2"/>
               <path d="M12 17v-2" strokeWidth="2"/>
               <path d="M8 11V7a4 4 0 0 1 8 0v4" strokeWidth="2"/>
@@ -95,13 +91,13 @@ export default function LoginForm() {
               placeholder="Digite sua senha"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              className={styles.input}
+              className="w-full pl-12 pr-12 py-3 text-[15px] border-2 border-[var(--color-border)] rounded-lg outline-none transition-all duration-200 bg-[var(--color-bg)] text-[var(--color-text)] placeholder:text-[var(--color-text-light)] focus:border-[#7c3aed] focus:shadow-[0_0_0_3px_rgba(124,58,237,0.1)]"
               required
             />
             <button
               type="button"
-              className={styles.togglePassword}
-              onClick={() => setShowPassword(!showPassword)}
+              className="absolute right-4 bg-transparent border-none text-[var(--color-text-light)] cursor-pointer p-1 flex items-center justify-center transition-colors duration-200 hover:text-[#7c3aed]"
+              onClick={togglePasswordVisibility}
               aria-label={showPassword ? 'Ocultar senha' : 'Mostrar senha'}
             >
               {showPassword ? (
@@ -119,32 +115,42 @@ export default function LoginForm() {
           </div>
         </div>
 
-        <div className={styles.options}>
-          <label className={styles.checkboxLabel}>
+        {/* Options */}
+        <div className="flex justify-between items-center -mt-1">
+          <label className="flex items-center gap-2 text-sm text-[var(--color-text)] cursor-pointer select-none">
             <input
               type="checkbox"
               checked={rememberMe}
               onChange={(e) => setRememberMe(e.target.checked)}
-              className={styles.checkbox}
+              className="w-[18px] h-[18px] cursor-pointer accent-[#7c3aed]"
             />
             <span>Lembrar de mim</span>
           </label>
-          <Link href="/recuperar-senha" className={styles.forgotPassword}>
+          <Link href="/recuperar-senha" className="text-sm text-[#7c3aed] font-semibold transition-colors duration-200 hover:text-[#6d28d9]">
             Esqueceu a senha?
           </Link>
         </div>
 
-        <button type="submit" className={styles.submitButton}>
-          Entrar
+        {/* Submit Button */}
+        <button 
+          type="submit" 
+          className="w-full py-3.5 text-base font-semibold text-white bg-gradient-to-r from-[#7c3aed] to-[#a78bfa] border-none rounded-lg cursor-pointer transition-all duration-200 mt-2 hover:-translate-y-0.5 hover:shadow-[0_8px_20px_rgba(124,58,237,0.3)] active:translate-y-0 disabled:opacity-60 disabled:cursor-not-allowed"
+          disabled={loading}
+        >
+          {loading ? 'Entrando...' : 'Entrar'}
         </button>
 
-        <div className={styles.divider}>
-          <span>ou</span>
+        {/* Divider */}
+        <div className="flex items-center text-center my-2">
+          <div className="flex-1 border-b border-[var(--color-border)]"></div>
+          <span className="px-4 text-[var(--color-text-light)] text-sm">ou</span>
+          <div className="flex-1 border-b border-[var(--color-border)]"></div>
         </div>
 
+        {/* Google Button */}
         <button 
           type="button" 
-          className={styles.googleButton}
+          className="w-full py-3.5 text-base font-semibold text-[var(--color-text)] bg-[var(--color-bg)] border-2 border-[var(--color-border)] rounded-lg cursor-pointer transition-all duration-200 flex items-center justify-center gap-3 hover:border-[#7c3aed] hover:bg-[var(--color-bg-light)] disabled:opacity-60 disabled:cursor-not-allowed"
           onClick={handleGoogleLogin}
           disabled={loading}
         >
@@ -157,17 +163,24 @@ export default function LoginForm() {
           {loading ? 'Entrando...' : 'Continuar com Google'}
         </button>
 
-        {error && <p className={styles.error}>{error}</p>}
+        {/* Error Message */}
+        {error && (
+          <p className="text-[#dc2626] text-sm text-center m-0 p-2 bg-[#fee2e2] rounded-md">
+            {error}
+          </p>
+        )}
 
-        <p className={styles.signup}>
+        {/* Signup Link */}
+        <p className="text-center text-sm text-[var(--color-text-light)] m-0">
           Não tem uma conta?{' '}
-          <Link href="/cadastro" className={styles.signupLink}>
+          <Link href="/cadastro" className="text-[#7c3aed] font-semibold transition-colors duration-200 hover:text-[#6d28d9]">
             Criar conta grátis
           </Link>
         </p>
       </form>
 
-      <Link href="/" className={styles.backLink}>
+      {/* Back Link */}
+      <Link href="/" className="block text-center mt-6 text-sm text-[var(--color-text-light)] transition-colors duration-200 hover:text-[#7c3aed]">
         ← Voltar para o início
       </Link>
     </div>

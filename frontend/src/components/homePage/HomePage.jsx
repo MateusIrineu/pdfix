@@ -1,3 +1,5 @@
+'use client';
+
 import React from "react";
 import Link from "next/link";
 import { MdOutlineTimer } from "react-icons/md";
@@ -29,8 +31,9 @@ export default function HomePage() {
 
         <div className="mt-8 flex items-center justify-center gap-4">
           <Link
-            className="bg-violet-600 hover:bg-violet-700 text-white px-6 py-3 rounded-full shadow hover:shadow-lg transition-all"
+            className="bg-violet-600 hover:bg-violet-700 text-white dark:!text-white font-semibold px-6 py-3 rounded-full shadow hover:shadow-lg transition-all"
             href="/curriculo"
+            style={{ color: '#ffffff' }}
           >
             Criar Currículo Grátis →
           </Link>
@@ -197,8 +200,9 @@ export default function HomePage() {
           </div>
           <div className="mt-20">
             <Link
-              className="bg-white text-violet-600 px-6 py-3 rounded-full shadow font-semibold hover:bg-violet-100 hover:shadow-lg hover:scale-105 transition-all duration-300"
+              className="bg-white text-violet-600 dark:!text-violet-600 px-6 py-3 rounded-full shadow font-bold hover:bg-violet-100 hover:shadow-lg hover:scale-105 transition-all duration-300"
               href="/curriculo"
+              style={{ color: '#8b5cf6' }}
             >
               Criar Meu Primeiro Currículo →
             </Link>
