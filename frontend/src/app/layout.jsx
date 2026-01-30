@@ -20,15 +20,32 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="pt-BR" suppressHydrationWarning>
-      <body className={`${geistSans.variable} ${geistMono.variable} antialiased`} style={{ backgroundColor: 'var(--color-bg)', color: 'var(--color-text)' }}>
+    <html lang="pt-BR" suppressHydrationWarning className="">
+      <head>
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              (function() {
+                const theme = localStorage.getItem('theme');
+                if (theme === 'dark') {
+                  document.documentElement.classList.add('dark');
+                } else {
+                  document.documentElement.classList.remove('dark');
+                }
+              })();
+            `,
+          }}
+        />
+      </head>
+      <body
+        className={`${geistSans.variable} ${geistMono.variable} antialiased bg-white dark:bg-slate-900`}
+      >
         <div className="min-h-screen transition-colors duration-300">
           <Nav />
-          <main>{children}</main>
+          <main className="pt-20">{children}</main>
           <Footer />
         </div>
       </body>
     </html>
   );
 }
-

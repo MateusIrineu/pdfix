@@ -1,5 +1,7 @@
 @import "tailwindcss";
 
+@variant dark (&:where(.dark, .dark *));
+
 :root {
   --color-primary: #8b5cf6;
   --color-primary-dark: #7c3aed;
@@ -29,14 +31,16 @@ html {
 }
 
 body {
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
+  font-family:
+    -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu",
+    "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   color: var(--color-text);
   background-color: var(--color-bg) !important;
-  transition: background-color 0.3s ease, color 0.3s ease;
+  transition:
+    background-color 0.3s ease,
+    color 0.3s ease;
 }
 
 h1 {
@@ -63,15 +67,20 @@ p {
   color: var(--color-text-light);
 }
 
+/* Melhor contraste para modo escuro */
+html.dark p {
+  color: #d1d5db;
+}
+
 @media (max-width: 768px) {
   h1 {
     font-size: 2.5rem;
   }
-  
+
   h2 {
     font-size: 2rem;
   }
-  
+
   h3 {
     font-size: 1.25rem;
   }
@@ -80,13 +89,19 @@ p {
 /* ===== ANIMAÇÕES SUAVES ===== */
 
 /* Transição padrão para todos os elementos interativos */
-a, button, input, textarea, select {
+a,
+button,
+input,
+textarea,
+select {
   transition: all 0.3s ease;
 }
 
 /* Hover suave em botões e links */
 .hover-lift {
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  transition:
+    transform 0.3s ease,
+    box-shadow 0.3s ease;
 }
 .hover-lift:hover {
   transform: translateY(-2px);
@@ -98,8 +113,12 @@ a, button, input, textarea, select {
   animation: fadeIn 0.5s ease-in-out;
 }
 @keyframes fadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
 
 /* Slide Up - subir suavemente */
@@ -152,8 +171,13 @@ a, button, input, textarea, select {
   animation: pulseSoft 2s infinite;
 }
 @keyframes pulseSoft {
-  0%, 100% { transform: scale(1); }
-  50% { transform: scale(1.02); }
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.02);
+  }
 }
 
 /* Shake suave - para erros */
@@ -161,12 +185,23 @@ a, button, input, textarea, select {
   animation: shake 0.5s ease-in-out;
 }
 @keyframes shake {
-  0%, 100% { transform: translateX(0); }
-  25% { transform: translateX(-5px); }
-  75% { transform: translateX(5px); }
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+  25% {
+    transform: translateX(-5px);
+  }
+  75% {
+    transform: translateX(5px);
+  }
 }
 
 /* Focus suave em inputs */
-input:focus, textarea:focus, select:focus {
-  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+input:focus,
+textarea:focus,
+select:focus {
+  transition:
+    border-color 0.3s ease,
+    box-shadow 0.3s ease;
 }

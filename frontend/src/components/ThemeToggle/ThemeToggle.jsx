@@ -7,13 +7,15 @@ export default function ThemeToggle() {
   const [darkMode, setDarkMode] = useState(false);
 
   useEffect(() => {
-    // Verificar preferência salva ou do sistema
+    // Verificar preferência salva - modo claro é o padrão
     const savedTheme = localStorage.getItem("theme");
-    const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
-    
-    if (savedTheme === "dark" || (!savedTheme && prefersDark)) {
+
+    if (savedTheme === "dark") {
       setDarkMode(true);
       document.documentElement.classList.add("dark");
+    } else {
+      setDarkMode(false);
+      document.documentElement.classList.remove("dark");
     }
   }, []);
 
@@ -31,7 +33,7 @@ export default function ThemeToggle() {
   return (
     <button
       onClick={toggleTheme}
-      className="p-2 rounded-lg bg-[var(--color-bg-light)] text-[var(--color-text)] hover:bg-[var(--color-primary)] hover:text-white transition-all duration-300"
+      className="p-2 rounded-lg bg-[var(--color-bg-light)] text-[var(--color-text)] hover:bg-[var(--color-primary)] hover:text-white transition-all duration-300 cursor-pointer"
       aria-label="Alternar tema"
     >
       {darkMode ? <FaSun size={20} /> : <FaMoon size={20} />}
