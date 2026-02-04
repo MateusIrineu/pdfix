@@ -37,9 +37,9 @@ try {
   // ⚠️ CUIDADO: force: true apaga todas as tabelas!
   // Use apenas em desenvolvimento
   await sequelize.sync({ force: false });
-  console.log("✅ Tabelas sincronizadas!");
+  console.log(" Tabelas sincronizadas!");
 } catch (err) {
-  console.error("❌ Erro ao conectar:", err);
+  console.error(" Erro ao conectar:", err);
 }
 // Porta do servidor
 const PORT = process.env.PORT || 3001;
