@@ -1,15 +1,23 @@
 import _sequelize from "sequelize";
 const { Model, Sequelize } = _sequelize;
 
-export default class usuario extends Model {
+export default class dadosPessoais extends Model {
   static init(sequelize, DataTypes) {
     return super.init(
       {
-        usuario_id: {
+        dados_pessoais_id: {
           type: DataTypes.UUID,
           defaultValue: DataTypes.UUIDV4,
           allowNull: false,
           primaryKey: true,
+        },
+        usuario_id: {
+          type: DataTypes.UUID,
+          allowNull: false,
+          references: {
+            model: "usuario",
+            key: "usuario_id",
+          },
         },
         nome: {
           type: DataTypes.STRING(255),
@@ -18,7 +26,25 @@ export default class usuario extends Model {
         email: {
           type: DataTypes.STRING(255),
           allowNull: false,
-          unique: "usuario_email_key",
+        },
+        telefone: {
+          type: DataTypes.STRING(50),
+          allowNull: true,
+        },
+        endereco: {
+          type: DataTypes.STRING(255),
+          allowNull: true,
+        },
+        idade: {
+          type: DataTypes.INTEGER,
+          allowNull: true,
+        },
+        linkedin_url: {
+          type: DataTypes.STRING(255),
+          allowNull: true,
+          validate: {
+            isUrl: true,
+          },
         },
         criado_em: {
           type: DataTypes.DATE,
@@ -30,26 +56,20 @@ export default class usuario extends Model {
           allowNull: true,
           defaultValue: Sequelize.Sequelize.literal("CURRENT_TIMESTAMP"),
         },
-        deletado_em: {
-          type: DataTypes.DATE,
-          allowNull: true,
-          defaultValue: Sequelize.Sequelize.literal("CURRENT_TIMESTAMP"),
-        },
       },
       {
         sequelize,
-        tableName: "usuario",
+        tableName: "dados_pessoais",
         schema: "public",
         timestamps: false,
         indexes: [
           {
-            name: "usuario_email_key",
+            name: "dados_pessoais_pkey",
             unique: true,
-            fields: [{ name: "email" }],
+            fields: [{ name: "dados_pessoais_id" }],
           },
           {
-            name: "usuario_pkey",
-            unique: true,
+            name: "idx_dados_pessoais_usuario",
             fields: [{ name: "usuario_id" }],
           },
         ],

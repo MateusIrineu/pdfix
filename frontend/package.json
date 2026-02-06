@@ -12,6 +12,7 @@
     "@deemlol/next-icons": "^0.1.9",
     "@react-pdf/renderer": "^4.3.2",
     "@tailwindcss/postcss": "^4.1.18",
+    "axios": "^1.13.4",
     "firebase": "^12.8.0",
     "next": "16.1.5",
     "react": "19.2.3",

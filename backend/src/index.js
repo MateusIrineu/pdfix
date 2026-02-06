@@ -14,6 +14,7 @@ import usuarioRoutes from "./modules/usuario/routes/usuarioRoute.js";
 import experienciaRoutes from "./modules/experiencia/routes/experienciaRouter.js";
 import formacaoRoutes from "./modules/formacao/routes/formacaoRoute.js";
 import competenciasRoutes from "./modules/competencias/routes/competenciasRoute.js";
+import dadosPessoaisRoutes from "./modules/dadosPessoais/routes/dadosPessoaisRoute.js";
 
 // Cria a aplicação Express
 const app = express();
@@ -28,6 +29,7 @@ app.use("/api/usuarios", usuarioRoutes);
 app.use("/api/experiencia", experienciaRoutes);
 app.use("/api/formacao", formacaoRoutes);
 app.use("/api/competencias", competenciasRoutes);
+app.use("/api/dados-pessoais", dadosPessoaisRoutes);
 
 // Testa a conexão com o banco
 try {

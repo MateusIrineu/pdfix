@@ -119,12 +119,27 @@ const styles = StyleSheet.create({
  * Template de PDF para o currículo
  */
 export const CurriculoPDFTemplate = ({ dados, isPreview = false }) => {
+  // Debug: Verificar dados recebidos
+  console.log('=== DEBUG PDF TEMPLATE ===');
+  console.log('Dados completos recebidos:', dados);
+  console.log('isPreview:', isPreview);
+  
   const { dadosPessoais, competencias, experiencias, formacoes } = dados;
 
-  // Limitar conteúdo no modo preview
-  const competenciasExibir = isPreview ? (competencias || []).slice(0, 2) : (competencias || []);
-  const experienciasExibir = isPreview ? (experiencias || []).slice(0, 1) : (experiencias || []);
-  const formacoesExibir = isPreview ? (formacoes || []).slice(0, 1) : (formacoes || []);
+  console.log('Dados pessoais:', dadosPessoais);
+  console.log('Competencias:', competencias);
+  console.log('Experiencias:', experiencias);
+  console.log('Formacoes:', formacoes);
+
+  // No preview, mostrar TODOS os dados preenchidos
+  const competenciasExibir = competencias || [];
+  const experienciasExibir = experiencias || [];
+  const formacoesExibir = formacoes || [];
+
+  console.log('Arrays para exibir:');
+  console.log('- Competencias:', competenciasExibir.length);
+  console.log('- Experiencias:', experienciasExibir.length);
+  console.log('- Formacoes:', formacoesExibir.length);
 
   return (
     <Document>
@@ -132,7 +147,7 @@ export const CurriculoPDFTemplate = ({ dados, isPreview = false }) => {
         {/* Banner de preview */}
         {isPreview && (
           <View style={styles.previewBanner} fixed>
-            <Text>🔒 PRÉVIA - Faça o pagamento para desbloquear o currículo completo</Text>
+            <Text> PRÉVIA - Faça o pagamento para desbloquear o currículo completo</Text>
           </View>
         )}
 
@@ -145,28 +160,45 @@ export const CurriculoPDFTemplate = ({ dados, isPreview = false }) => {
 
         {/* Header com dados pessoais */}
         <View style={[styles.header, isPreview && { marginTop: 30 }]}>
-          <Text style={styles.name}>{dadosPessoais?.nome || 'Nome Completo'}</Text>
+          <Text style={styles.name}>
+            {dadosPessoais?.nome || 'Nome'}
+          </Text>
           <View style={styles.contactInfo}>
-            {dadosPessoais?.email && <Text>📧 {isPreview ? '***@*****.com' : dadosPessoais.email}</Text>}
-            {dadosPessoais?.telefone && <Text>📱 {isPreview ? '(***) ****-****' : dadosPessoais.telefone}</Text>}
-            {dadosPessoais?.endereco && <Text>📍 {isPreview ? '***' : dadosPessoais.endereco}</Text>}
-            {dadosPessoais?.linkedin_url && <Text>🔗 {isPreview ? 'linkedin.com/***' : dadosPessoais.linkedin_url}</Text>}
+            {dadosPessoais?.email && (
+              <Text>Email: {dadosPessoais.email}</Text>
+            )}
+            {dadosPessoais?.telefone && (
+              <Text>Telefone: {dadosPessoais.telefone}</Text>
+            )}
+            {dadosPessoais?.endereco && (
+              <Text>Endereco: {dadosPessoais.endereco}</Text>
+            )}
+            {dadosPessoais?.idade && (
+              <Text>Idade: {dadosPessoais.idade} anos</Text>
+            )}
+            {dadosPessoais?.linkedin_url && (
+              <Text>LinkedIn: {dadosPessoais.linkedin_url}</Text>
+            )}
           </View>
         </View>
 
         {/* Seção de Competências */}
         {competenciasExibir && competenciasExibir.length > 0 && (
           <View style={styles.section}>
-            <Text style={styles.sectionTitle}>COMPETÊNCIAS</Text>
+            <Text style={styles.sectionTitle}>COMPETENCIAS</Text>
             {competenciasExibir.map((comp, index) => (
               <View key={index} style={styles.competenciaItem}>
-                <Text style={styles.competenciaNome}>{comp.nome_competencia}</Text>
+                <Text style={styles.competenciaNome}>
+                  {comp.nome_competencia || 'Competencia'}
+                </Text>
                 {comp.categoria && (
-                  <Text style={styles.competenciaCategoria}>{comp.categoria}</Text>
+                  <Text style={styles.competenciaCategoria}>
+                    Categoria: {comp.categoria}
+                  </Text>
                 )}
                 {comp.nivel_proficiencia && (
                   <Text style={styles.competenciaNivel}>
-                    Nível: {comp.nivel_proficiencia}
+                    Nivel: {comp.nivel_proficiencia}
                   </Text>
                 )}
                 {comp.descricao && (
@@ -174,70 +206,57 @@ export const CurriculoPDFTemplate = ({ dados, isPreview = false }) => {
                 )}
               </View>
             ))}
-            {isPreview && competencias && competencias.length > 2 && (
-              <Text style={{ marginTop: 10, fontStyle: 'italic', color: '#666', fontSize: 10 }}>
-                ... e mais {competencias.length - 2} competência(s) - Desbloqueie para ver tudo
-              </Text>
-            )}
           </View>
         )}
 
         {/* Seção de Experiências Profissionais */}
         {experienciasExibir && experienciasExibir.length > 0 && (
           <View style={styles.section}>
-            <Text style={styles.sectionTitle}>EXPERIÊNCIA PROFISSIONAL</Text>
+            <Text style={styles.sectionTitle}>EXPERIENCIA PROFISSIONAL</Text>
             {experienciasExibir.map((exp, index) => (
               <View key={index} style={styles.itemContainer}>
-                <Text style={styles.itemTitle}>{exp.titulo_cargo}</Text>
+                <Text style={styles.itemTitle}>
+                  {exp.titulo_cargo || 'Cargo'}
+                </Text>
                 <Text style={styles.itemSubtitle}>
-                  {exp.empresa} • {exp.localidade}
+                  {exp.empresa || 'Empresa'}{exp.localidade ? ` - ${exp.localidade}` : ''}
                 </Text>
                 <Text style={styles.itemDate}>
-                  {exp.data_inicio && new Date(exp.data_inicio).toLocaleDateString('pt-BR')}
-                  {' - '}
+                  {exp.data_inicio ? new Date(exp.data_inicio).toLocaleDateString('pt-BR') : ''}
+                  {exp.data_inicio && ' - '}
                   {exp.atual 
                     ? 'Atual' 
-                    : exp.data_fim && new Date(exp.data_fim).toLocaleDateString('pt-BR')}
+                    : exp.data_fim ? new Date(exp.data_fim).toLocaleDateString('pt-BR') : ''}
                 </Text>
                 {exp.sobre && (
-                  <Text style={styles.itemDescription}>
-                    {isPreview ? exp.sobre.slice(0, 100) + '...' : exp.sobre}
-                  </Text>
+                  <Text style={styles.itemDescription}>{exp.sobre}</Text>
                 )}
               </View>
             ))}
-            {isPreview && experiencias && experiencias.length > 1 && (
-              <Text style={{ marginTop: 10, fontStyle: 'italic', color: '#666', fontSize: 10 }}>
-                ... e mais {experiencias.length - 1} experiência(s) - Desbloqueie para ver tudo
-              </Text>
-            )}
           </View>
         )}
 
         {/* Seção de Formação Acadêmica */}
         {formacoesExibir && formacoesExibir.length > 0 && (
           <View style={styles.section}>
-            <Text style={styles.sectionTitle}>FORMAÇÃO ACADÊMICA</Text>
+            <Text style={styles.sectionTitle}>FORMACAO ACADEMICA</Text>
             {formacoesExibir.map((form, index) => (
               <View key={index} style={styles.itemContainer}>
-                <Text style={styles.itemTitle}>{form.curso}</Text>
+                <Text style={styles.itemTitle}>
+                  {form.curso || 'Curso'}
+                </Text>
                 <Text style={styles.itemSubtitle}>
-                  {form.instituicao} • {form.nivel}
+                  {form.instituicao || 'Instituicao'}{form.nivel ? ` - ${form.nivel}` : ''}
                 </Text>
                 <Text style={styles.itemDate}>
-                  {form.data_inicio && new Date(form.data_inicio).toLocaleDateString('pt-BR')}
-                  {' - '}
+                  {form.data_inicio ? new Date(form.data_inicio).toLocaleDateString('pt-BR') : ''}
+                  {form.data_inicio && ' - '}
                   {form.cursando 
                     ? 'Cursando' 
-                    : form.data_conclusao && new Date(form.data_conclusao).toLocaleDateString('pt-BR')}
+                    : form.data_conclusao ? new Date(form.data_conclusao).toLocaleDateString('pt-BR') : ''}
                 </Text>
               </View>
             ))}
-            {isPreview && formacoes && formacoes.length > 1 && (
-              <Text style={{ marginTop: 10, fontStyle: 'italic', color: '#666', fontSize: 10 }}>
-                ... e mais {formacoes.length - 1} formação(ões) - Desbloqueie para ver tudo
-              </Text>
-            )}
           </View>
         )}
 

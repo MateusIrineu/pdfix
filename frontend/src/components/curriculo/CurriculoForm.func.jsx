@@ -2,11 +2,9 @@
 
 import { useState, useEffect } from 'react';
 import {
-  salvarDadosPessoais,
   adicionarCompetencia,
   adicionarExperiencia,
   adicionarFormacao,
-  gerarPDF,
 } from './services';
 import { verificarPagamento } from '../Payment/services';
 
@@ -22,7 +20,6 @@ export const useCurriculoForm = () => {
   const [dadosPessoais, setDadosPessoais] = useState({
     nome: '',
     email: '',
-    senha: '',
     telefone: '',
     endereco: '',
     idade: '',
@@ -65,67 +62,48 @@ export const useCurriculoForm = () => {
   };
 
   /**
-   * Adiciona nova competência à lista
+   * Adiciona nova competência à lista (localmente)
    */
-  const handleAdicionarCompetencia = async (competencia) => {
-    try {
-      setLoading(true);
-      const novaCompetencia = await adicionarCompetencia(competencia);
-      setCompetencias(prev => [...prev, novaCompetencia]);
-      setSuccess('Competência adicionada com sucesso!');
-    } catch (err) {
-      setError(err.message);
-    } finally {
-      setLoading(false);
-    }
+  const handleAdicionarCompetencia = (competencia) => {
+    const novaCompetencia = { ...competencia, id: Date.now() };
+    setCompetencias(prev => {
+      const novaLista = [...prev, novaCompetencia];
+      console.log('Competência adicionada:', novaCompetencia);
+      console.log('Nova lista de competências:', novaLista);
+      return novaLista;
+    });
+    setSuccess('Competência adicionada!');
+    setTimeout(() => setSuccess(''), 3000);
   };
 
   /**
-   * Adiciona nova experiência à lista
+   * Adiciona nova experiência à lista (localmente)
    */
-  const handleAdicionarExperiencia = async (experiencia) => {
-    try {
-      setLoading(true);
-      const novaExperiencia = await adicionarExperiencia(experiencia);
-      setExperiencias(prev => [...prev, novaExperiencia]);
-      setSuccess('Experiência adicionada com sucesso!');
-    } catch (err) {
-      setError(err.message);
-    } finally {
-      setLoading(false);
-    }
+  const handleAdicionarExperiencia = (experiencia) => {
+    const novaExperiencia = { ...experiencia, id: Date.now() };
+    setExperiencias(prev => {
+      const novaLista = [...prev, novaExperiencia];
+      console.log('Experiência adicionada:', novaExperiencia);
+      console.log('Nova lista de experiências:', novaLista);
+      return novaLista;
+    });
+    setSuccess('Experiência adicionada!');
+    setTimeout(() => setSuccess(''), 3000);
   };
 
   /**
-   * Adiciona nova formação à lista
+   * Adiciona nova formação à lista (localmente)
    */
-  const handleAdicionarFormacao = async (formacao) => {
-    try {
-      setLoading(true);
-      const novaFormacao = await adicionarFormacao(formacao);
-      setFormacoes(prev => [...prev, novaFormacao]);
-      setSuccess('Formação adicionada com sucesso!');
-    } catch (err) {
-      setError(err.message);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  /**
-   * Salva dados pessoais
-   */
-  const handleSalvarDadosPessoais = async () => {
-    try {
-      setLoading(true);
-      setError('');
-      await salvarDadosPessoais(dadosPessoais);
-      setSuccess('Dados salvos com sucesso!');
-    } catch (err) {
-      setError(err.message);
-    } finally {
-      setLoading(false);
-    }
+  const handleAdicionarFormacao = (formacao) => {
+    const novaFormacao = { ...formacao, id: Date.now() };
+    setFormacoes(prev => {
+      const novaLista = [...prev, novaFormacao];
+      console.log('Formação adicionada:', novaFormacao);
+      console.log('Nova lista de formações:', novaLista);
+      return novaLista;
+    });
+    setSuccess('Formação adicionada!');
+    setTimeout(() => setSuccess(''), 3000);
   };
 
   /**
@@ -178,12 +156,21 @@ export const useCurriculoForm = () => {
       setLoading(true);
       setError('');
       
+      console.log('=== GERANDO PDF ===');
+      console.log('Estado atual:');
+      console.log('- dadosPessoais:', dadosPessoais);
+      console.log('- competencias:', competencias);
+      console.log('- experiencias:', experiencias);
+      console.log('- formacoes:', formacoes);
+      
       const dadosCompletos = {
         dadosPessoais,
         competencias,
         experiencias,
         formacoes,
       };
+
+      console.log('Dados sendo enviados para o PDF:', dadosCompletos);
 
       const { gerarPDFLocal } = await import('./services');
       // Sempre gerar em modo preview para visualização
@@ -230,7 +217,6 @@ export const useCurriculoForm = () => {
     handleAdicionarCompetencia,
     handleAdicionarExperiencia,
     handleAdicionarFormacao,
-    handleSalvarDadosPessoais,
     handleGerarPDF,
     handleVisualizarPDF,
     clearMessages,
