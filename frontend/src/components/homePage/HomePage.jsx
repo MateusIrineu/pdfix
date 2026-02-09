@@ -37,12 +37,6 @@ export default function HomePage() {
           >
             Criar Currículo Grátis →
           </Link>
-          <Link
-            className="text-zinc-700 dark:text-zinc-200 hover:text-violet-600 dark:hover:text-violet-400 self-center transition-colors"
-            href="/login"
-          >
-            Já tenho conta
-          </Link>
         </div>
       </section>
 

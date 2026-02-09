@@ -31,10 +31,11 @@ export default function Nav() {
             Criar Currículo
           </Link>
           <Link
-            className="px-4 py-2 rounded-md border border-violet-500 text-violet-600 dark:text-violet-400 hover:bg-violet-500 hover:text-white dark:hover:text-white transition-all duration-300"
+            className="bg-violet-600 text-white px-4 py-2 rounded-lg font-medium hover:bg-violet-700 transition-colors"
             href="/login"
+            style={{ color: '#ffffff' }}
           >
-            Começar Grátis
+            Entrar
           </Link>
           <ThemeToggle />
         </nav>
