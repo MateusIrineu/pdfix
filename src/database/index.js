@@ -1,17 +1,21 @@
 // Importa o Sequelize, que é o ORM (Object-Relational Mapping) para Node.js
 import { Sequelize } from "sequelize";
+import dotenv from "dotenv";
+
+// Carrega as variáveis de ambiente do arquivo .env
+dotenv.config();
 
 // Importa a função que inicializa todos os models do projeto
 import initModels from "./init-models.js";
 
 // Cria uma instância do Sequelize, configurando a conexão com o banco de dados
 const sequelize = new Sequelize(
-  "pdfix_db", // nome do banco de dados
-  "postgres", // usuário do banco
-  "BemVindo!", // senha do usuário
+  process.env.DB_NAME, // nome do banco de dados
+  process.env.DB_USER, // usuário do banco
+  process.env.DB_PASS, // senha do usuário
   {
-    host: "localhost", // endereço do servidor do banco
-    dialect: "postgres", // tipo do banco de dados
+    host: process.env.DB_HOST, // endereço do servidor do banco
+    dialect: process.env.DB_DIALECT, // tipo do banco de dados
   },
 );
 
