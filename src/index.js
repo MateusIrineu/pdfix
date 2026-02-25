@@ -32,5 +32,5 @@ app.use("/api/competencias", competenciasRoutes);
 app.use("/api/dados-pessoais", dadosPessoaisRoutes);
 
 // Porta do servidor
-const PORT = process.env.PORT || 3001;
+const PORT = process.env.PORT;
 app.listen(PORT, () => console.log(`Servidor rodando na porta ${PORT}`));

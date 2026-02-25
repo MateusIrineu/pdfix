@@ -2,9 +2,10 @@ import { Sequelize } from "sequelize";
 import initModels from "./init-models.js";
 
 // Cria a conexão com o banco
-const sequelize = new Sequelize("pdfix_db", "postgres", "BemVindo!", {
-  host: "localhost",
-  dialect: "postgres",
+const sequelize = new Sequelize(`
+  ${process.env.DB_NAME}`, `${process.env.DB_USER}`, `${process.env.DB_PASS}`, {
+  host: `${process.env.DB_HOST}`,
+  dialect: "mssql",
 });
 
 // Inicializa os models

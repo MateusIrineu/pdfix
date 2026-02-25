@@ -64,9 +64,6 @@ jobs:
         run: npx sequelize-cli db:migrate --config config.cjs --env production
         continue-on-error: true
 
-      - name: Start Azure Web App
-        run: az webapp start --name pdfix --resource-group $(az webapp show --name pdfix --query resourceGroup -o tsv)
-
       - name: 'Deploy to Azure Web App'
         id: deploy-to-webapp
         uses: azure/webapps-deploy@v3
