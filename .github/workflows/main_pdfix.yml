@@ -55,6 +55,7 @@ jobs:
       - name: 'Run database migrations'
         run: |
           npm install
+          npx sequelize-cli db:migrate
           npm run migrate
 
       - name: 'Deploy to Azure Web App'
