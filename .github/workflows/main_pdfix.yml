@@ -61,7 +61,7 @@ jobs:
         run: npm ci
 
       - name: Run database migrations
-        run: npm run migrate
+        run: npx sequelize-cli db:migrate --config config.cjs
 
       - name: 'Deploy to Azure Web App'
         id: deploy-to-webapp
