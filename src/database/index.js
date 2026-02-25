@@ -15,7 +15,7 @@ const sequelize = new Sequelize(
   process.env.DB_PASS, // senha do usuário
   {
     host: process.env.DB_HOST, // endereço do servidor do banco
-    dialect: process.env.DB_DIALECT, // tipo do banco de dados
+    dialect: process.env.DB_DIALECT || 'postgres', // tipo do banco de dados
   },
 );
 
