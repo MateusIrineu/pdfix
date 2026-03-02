@@ -62,22 +62,10 @@ jobs:
 
       - name: Validate environment variables
         run: node scripts/validate-env.js
-        env:
-          DB_USER: ${{ secrets.DB_USER }}
-          DB_PASS: ${{ secrets.DB_PASS }}
-          DB_HOST: ${{ secrets.DB_HOST }}
-          DB_NAME: ${{ secrets.DB_NAME }}
-          DB_DIALECT: mssql
 
       - name: Run database migrations
         run: npx sequelize-cli db:migrate --env production
         continue-on-error: true
-        env:
-          DB_USER: ${{ secrets.DB_USER }}
-          DB_PASS: ${{ secrets.DB_PASS }}
-          DB_HOST: ${{ secrets.DB_HOST }}
-          DB_NAME: ${{ secrets.DB_NAME }}
-          DB_DIALECT: mssql
 
       - name: 'Deploy to Azure Web App'
         id: deploy-to-webapp
