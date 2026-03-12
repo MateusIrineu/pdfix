@@ -10,6 +10,9 @@ COPY . .
 
 RUN npm run build
 
+# Copy public folder to standalone output for static assets
+RUN cp -r public .next/standalone/public
+
 EXPOSE 8080
 
 ENV NODE_ENV=production
