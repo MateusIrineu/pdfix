@@ -16,4 +16,4 @@ ENV NODE_ENV=production
 ENV NEXT_TELEMETRY_DISABLED=1
 ENV PORT=8080
 
-CMD ["npm", "start"]
+CMD ["node", ".next/standalone/server.js"]
