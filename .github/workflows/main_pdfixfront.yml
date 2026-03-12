@@ -55,6 +55,8 @@ jobs:
       - name: Set image output
         id: image
         run: echo "image=${{ steps.lowercase.outputs.image }}" >> $GITHUB_OUTPUT
+
+  deploy:
     runs-on: ubuntu-latest
     needs: build-and-push
     permissions:
