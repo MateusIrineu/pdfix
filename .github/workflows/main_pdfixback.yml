@@ -21,18 +21,30 @@ jobs:
       - name: Set up Node.js version
         uses: actions/setup-node@v3
         with:
-          node-version: '24.x'
+          node-version: '18.x'
+          cache: 'npm'
 
-      - name: npm install and build
+      - name: npm install
+        run: npm install
+
+      - name: Create deployment package
         run: |
-          npm install
-          npm run build --if-present
+          mkdir -p deploy
+          cp -r src deploy/
+          cp -r database deploy/
+          cp -r auth deploy/
+          cp -r scripts deploy/
+          cp package.json deploy/
+          cp package-lock.json deploy/
+          cp .sequelizerc deploy/
+          cp .env.example deploy/.env 2>/dev/null || true
+          cd deploy && npm install --production
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v4
         with:
           name: node-app
-          path: .
+          path: deploy
 
   deploy:
     runs-on: ubuntu-latest
@@ -46,6 +58,7 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: node-app
+          path: .
       
       - name: Login to Azure
         uses: azure/login@v2
