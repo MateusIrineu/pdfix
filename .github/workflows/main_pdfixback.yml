@@ -31,12 +31,11 @@ jobs:
         run: |
           mkdir -p deploy
           cp -r src deploy/
-          cp -r database deploy/
           cp -r auth deploy/
           cp -r scripts deploy/
           cp package.json deploy/
           cp package-lock.json deploy/
-          cp .sequelizerc deploy/
+          cp .sequelizerc deploy/ 2>/dev/null || true
           cp .env.example deploy/.env 2>/dev/null || true
           cd deploy && npm install --production
 
