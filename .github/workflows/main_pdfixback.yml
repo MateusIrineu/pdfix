@@ -24,10 +24,7 @@ jobs:
           node-version: '18.x'
           cache: 'npm'
 
-      - name: npm install
-        run: npm install
-
-      - name: Create deployment package
+      - name: Prepare deployment files
         run: |
           rm -rf deploy
           mkdir -p deploy
@@ -43,6 +40,8 @@ jobs:
           chmod +x deploy/startup.sh
           # Criar .env vazio - as variáveis virão do Azure
           touch deploy/.env
+          echo "Deployment package ready (no node_modules included)"
+          du -sh deploy/
           echo "Arquivos para deploy:"
           ls -la deploy/
 

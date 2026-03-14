@@ -3,16 +3,24 @@ set -e
 
 echo "Starting Node.js application at $(date)"
 echo "Current directory: $(pwd)"
+echo "Node version: $(node --version)"
+echo "NPM version: $(npm --version)"
 
 # Aguardar se houver instalação anterior
-sleep 5
+sleep 2
 
-# Instalar dependências se necessário
-if [ ! -d "node_modules" ] || [ ! -f "node_modules/.installed" ]; then
-  echo "Installing dependencies..."
-  npm install --production
-  touch node_modules/.installed
+# Instalar dependências SEMPRE (importante!)
+echo "Installing dependencies..."
+npm install --production
+
+# Verificar se as dependências foram instaladas
+if [ ! -d "node_modules" ]; then
+  echo "ERROR: node_modules not installed!"
+  exit 1
 fi
+
+echo "Dependencies installed successfully"
+ls -la node_modules | head -20
 
 # Rodar migrations se necessário
 if [ -f ".sequelizerc" ]; then
