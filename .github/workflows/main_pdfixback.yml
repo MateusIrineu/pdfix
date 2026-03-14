@@ -35,9 +35,11 @@ jobs:
           cp package-lock.json deploy/
           cp .sequelizerc deploy/ 2>/dev/null || true
           cp .deployment deploy/ 2>/dev/null || true
+          cp .postdeployment deploy/ 2>/dev/null || true
           cp startup.sh deploy/ 2>/dev/null || true
           cp config.cjs deploy/ 2>/dev/null || true
           chmod +x deploy/startup.sh
+          chmod +x deploy/.postdeployment 2>/dev/null || true
           # Criar .env vazio - as variáveis virão do Azure
           touch deploy/.env
           echo "Deployment package ready (no node_modules included)"
