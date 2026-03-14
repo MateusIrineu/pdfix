@@ -29,6 +29,7 @@ jobs:
 
       - name: Create deployment package
         run: |
+          rm -rf deploy
           mkdir -p deploy
           cp -r src deploy/
           cp -r auth deploy/
@@ -36,8 +37,14 @@ jobs:
           cp package.json deploy/
           cp package-lock.json deploy/
           cp .sequelizerc deploy/ 2>/dev/null || true
-          cp .env.example deploy/.env 2>/dev/null || true
-          cd deploy && npm install --production
+          cp .deployment deploy/ 2>/dev/null || true
+          cp startup.sh deploy/ 2>/dev/null || true
+          cp config.cjs deploy/ 2>/dev/null || true
+          chmod +x deploy/startup.sh
+          # Criar .env vazio - as variáveis virão do Azure
+          touch deploy/.env
+          echo "Arquivos para deploy:"
+          ls -la deploy/
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v4
@@ -66,6 +73,9 @@ jobs:
           tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_461BB48D1D964DF29136675D9DBC7353 }}
           subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_E786BFEEF61C4345A31B2F79ECEDD50A }}
 
+      - name: Wait for SCM to be ready
+        run: sleep 30
+
       - name: 'Deploy to Azure Web App'
         id: deploy-to-webapp
         uses: azure/webapps-deploy@v3
@@ -73,4 +83,15 @@ jobs:
           app-name: 'pdfixBack'
           slot-name: 'Production'
           package: .
+          clean: true
+
+      - name: Wait for deployment to complete
+        run: sleep 30
+
+      - name: Configure App Service startup
+        run: |
+          az webapp config set \
+            --resource-group "Serviço Nacional de Aprendizagem Comercial - SENAC RN" \
+            --name pdfixBack \
+            --startup-file "bash startup.sh"
           
