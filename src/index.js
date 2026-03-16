@@ -8,7 +8,6 @@ import dotenv from "dotenv";
 
 dotenv.config();
 // Importa a conexão com o banco de dados configurada no Sequelize
-import { sequelize } from "./database/index.js";
 
 import usuarioRoutes from "./modules/usuario/routes/usuarioRoute.js";
 import experienciaRoutes from "./modules/experiencia/routes/experienciaRouter.js";
