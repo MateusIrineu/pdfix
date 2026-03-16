@@ -43,7 +43,9 @@ Thumbs.db
 *.p12
 *.json
 !frontend/package.json
+!frontend/package-lock.json
 !backend/package.json
+!backend/package-lock.json
 # Firebase admin credentials
 *firebase-adminsdk*.json
 # Database
