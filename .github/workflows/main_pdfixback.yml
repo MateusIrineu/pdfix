@@ -37,12 +37,9 @@ jobs:
           cp startup.sh deploy/ 2>/dev/null || true
           cp config.cjs deploy/ 2>/dev/null || true
           chmod +x deploy/startup.sh
-          cd deploy
-          npm ci --omit=dev
-          cd ..
           # Criar .env vazio - as variáveis virão do Azure
           touch deploy/.env
-          echo "Deployment package ready with production dependencies"
+          echo "Deployment package ready (npm install will run on Azure)"
           du -sh deploy/
           echo "Arquivos para deploy:"
           ls -la deploy/
