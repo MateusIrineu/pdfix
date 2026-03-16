@@ -4,10 +4,10 @@ WORKDIR /app
 
 COPY package*.json ./
 
-RUN npm ci --omit=dev
+RUN npm install
 
 COPY . .
 
 EXPOSE 3000
 
-CMD npx sequelize-cli db:migrate && npm start
+CMD npm install && npx sequelize-cli db:migrate && npm start
