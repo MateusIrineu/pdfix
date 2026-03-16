@@ -34,12 +34,10 @@ jobs:
           cp package.json deploy/
           cp package-lock.json deploy/
           cp .sequelizerc deploy/ 2>/dev/null || true
-          cp startup.sh deploy/ 2>/dev/null || true
           cp config.cjs deploy/ 2>/dev/null || true
-          chmod +x deploy/startup.sh
           # Criar .env vazio - as variáveis virão do Azure
           touch deploy/.env
-          echo "Deployment package ready (npm install will run on Azure)"
+          echo "Deployment package ready (npm install will run on Azure Startup Command)"
           du -sh deploy/
           echo "Arquivos para deploy:"
           ls -la deploy/
