@@ -24,6 +24,9 @@ jobs:
           node-version: '18.x'
           cache: 'npm'
 
+      - name: Install dependencies
+        run: npm ci --omit=dev
+
       - name: Prepare deployment files
         run: |
           rm -rf deploy
@@ -31,16 +34,17 @@ jobs:
           cp -r src deploy/
           cp -r auth deploy/
           cp -r scripts deploy/
+          cp -r node_modules deploy/
           cp package.json deploy/
           cp package-lock.json deploy/
           cp .sequelizerc deploy/ 2>/dev/null || true
           cp config.cjs deploy/ 2>/dev/null || true
           # Criar .env vazio - as variáveis virão do Azure
           touch deploy/.env
-          echo "Deployment package ready (npm install will run on Azure Startup Command)"
+          echo "✅ Deployment package ready - node_modules included, Azure will NOT run npm install"
           du -sh deploy/
           echo "Arquivos para deploy:"
-          ls -la deploy/
+          ls -la deploy/ | head -20
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v4
