@@ -28,9 +28,11 @@
     "express": "^4.18.2",
     "firebase-admin": "^13.7.0",
     "nodemon": "^3.1.11",
+    "pg": "^8.20.0",
     "sequelize": "^6.37.7",
     "sequelize-auto": "^0.8.8",
     "sequelize-cli": "^6.6.5",
+    "stripe": "^20.4.1",
     "tedious": "^19.2.1",
     "uuid": "^13.0.0"
   }
