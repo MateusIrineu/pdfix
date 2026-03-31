@@ -1,3 +1,16 @@
 import Stripe from 'stripe'
+import dotenv from 'dotenv'
 
-export default new Stripe(process.env.STRIPE_SECRET_KEY);
+dotenv.config();
+
+let stripeCliente;
+
+export default function getStripe() {
+    if (!stripeCliente) {
+        if (!process.env.STRIPE_SECRET_KEY) {
+            throw new Error('STRIPE_SECRET_KEY não configurada.');
+        }
+        stripeCliente = new Stripe (STRIPE_SECRET_KEY)
+    }
+    return stripeCliente
+};

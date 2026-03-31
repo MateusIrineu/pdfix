@@ -1,11 +1,17 @@
-const express = require('express');
-const router = express.Router();
-const stripeEventController = require('../controllers/stripe_event.controller');
+import express from 'express';
+import authMiddleware from '../../../middleware/authMiddleware.js';
+import stripeController from '../controllers/stripe_event.controller.js';
 
-router.get('/', stripeEventController.getAll);
-router.get('/:id', stripeEventController.getById);
-router.post('/', stripeEventController.create);
-router.put('/:id', stripeEventController.update);
-router.delete('/:id', stripeEventController.remove);
+const webhookRouter = express.Router();
+const stripeRouter = express.Router();
 
-module.exports = router;
+webhookRouter.post(
+  '/webhook',
+  express.raw({ type: 'application/json' }),
+  stripeController.handleWebhook
+);
+
+stripeRouter.post('/customer-portal', authMiddleware, stripeController.createCustomerPortalSession);
+
+export { webhookRouter, stripeRouter };
+export default webhookRouter;

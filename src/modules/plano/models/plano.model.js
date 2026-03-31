@@ -1,5 +1,5 @@
-const { DataTypes } = require('sequelize');
-const sequelize = require('../../../database');
+import { DataTypes } from 'sequelize';
+import sequelize from '../../../database/index.js';
 
 const Plano = sequelize.define('Plano', {
   id: {
@@ -31,4 +31,4 @@ const Plano = sequelize.define('Plano', {
   timestamps: true,
 });
 
-module.exports = Plano;
+export default Plano;
