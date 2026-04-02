@@ -20,6 +20,13 @@ export default class usuario extends Model {
           allowNull: false,
           unique: "usuario_email_key",
         },
+        
+        stripeCustomerId: {
+          type: DataTypes.STRING,
+          allowNull: true,
+          unique: true
+        },
+
         criado_em: {
           type: DataTypes.DATE,
           allowNull: true,

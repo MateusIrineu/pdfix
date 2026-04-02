@@ -31,4 +31,4 @@ export function initializeFirebaseAdmin() {
   initialized = true;
 }
 
-export default { admin };
+export { admin };
