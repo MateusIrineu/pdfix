@@ -16,6 +16,13 @@ const geistMono = Geist_Mono({
 export const metadata = {
   title: "PDFix",
   description: "Crie currículos profissionais rapidamente",
+  icons: {
+    icon: [
+      { url: "/favicon.ico", sizes: "any" },
+      { url: "/assets/logo2.2.png", type: "image/png", sizes: "192x192" },
+    ],
+    apple: "/assets/logo2.2.png",
+  },
 };
 
 export default function RootLayout({ children }) {

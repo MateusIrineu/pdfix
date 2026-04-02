@@ -71,7 +71,7 @@ export default function CurriculoForm() {
       )}
 
       {/* Alerta de pagamento */}
-      {!verificandoPagamento && !pagamentoAtivo && (
+      {/* {!verificandoPagamento && !pagamentoAtivo && (
         <div className="bg-yellow-100 dark:bg-yellow-900/30 border border-yellow-400 dark:border-yellow-600 px-4 py-3 rounded mb-4 flex items-center gap-3">
           <FaLock className="text-2xl text-yellow-800 dark:text-yellow-300" />
           <div className="flex-1">
@@ -85,7 +85,7 @@ export default function CurriculoForm() {
             Fazer Pagamento
           </button>
         </div>
-      )}
+      )} */}
 
       <h1 className="text-4xl font-extrabold text-center text-[#8E51FF] mb-3">
         Criar Currículo
@@ -507,7 +507,7 @@ export default function CurriculoForm() {
         <button 
           onClick={handleVisualizarPDF}
           disabled={loading || verificandoPagamento}
-          className="w-full flex items-center justify-center gap-2 bg-violet-600 hover:bg-violet-700 disabled:bg-gray-400 disabled:cursor-not-allowed cursor-pointer text-white dark:!text-white font-semibold py-4 rounded-xl transition-colors duration-300"
+          className="w-full flex items-center justify-center gap-2 bg-violet-600 hover:bg-violet-700 disabled:bg-gray-400 disabled:cursor-not-allowed cursor-pointer text-white dark:text-white font-semibold py-4 rounded-xl transition-colors duration-300"
           style={{ color: '#ffffff' }}
         >
           <FaEye />
@@ -547,7 +547,7 @@ export default function CurriculoForm() {
 
         {!pagamentoAtivo && (
           <button 
-            onClick={() => window.location.href = '/pagamento'}
+            onClick={() => window.location.href = 'https://buy.stripe.com/4gM3cv0d0crI3LmcUh0oM00'}
             className="flex items-center justify-center gap-2 bg-yellow-600 hover:bg-yellow-700 text-white font-semibold py-4 px-8 rounded-xl transition-colors duration-300"
           >
             <FaLock />

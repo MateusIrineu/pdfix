@@ -4,6 +4,7 @@ import React, { useEffect, useState, useRef } from "react";
 import { getFirebaseAuth } from "@/lib/firebase";
 import { onAuthStateChanged, signOut } from "firebase/auth";
 import Link from "next/link";
+import Image from "next/image";
 import ThemeToggle from "../ThemeToggle/ThemeToggle";
 
 export default function Nav() {
@@ -50,12 +51,16 @@ export default function Nav() {
       className="fixed top-0 left-0 right-0 z-50 px-6 py-4 flex items-center justify-center backdrop-blur-xl backdrop-saturate-150 bg-white/60 dark:bg-slate-900/60 border-b border-white/20 dark:border-white/10"
     >
       <div className="max-w-6xl w-full flex items-center justify-between">
-        <div className="flex items-center gap-3">
-          <div className="w-10 h-10 bg-violet-500 rounded-md flex items-center justify-center text-white font-bold">
-            PDF
-          </div>
-          <span className="font-semibold">PDFix</span>
-        </div>
+        <Link href="/" className="flex items-center">
+          <Image
+            src="/assets/logo2.png"
+            alt="PDFix Logo"
+            width={200}
+            height={56}
+            className="h-14 w-auto"
+            priority
+          />
+        </Link>
 
         <nav className="flex items-center gap-4">
           <ThemeToggle />

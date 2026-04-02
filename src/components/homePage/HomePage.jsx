@@ -31,7 +31,7 @@ export default function HomePage() {
 
         <div className="mt-8 flex items-center justify-center gap-4">
           <Link
-            className="bg-violet-600 hover:bg-violet-700 text-white dark:!text-white font-semibold px-6 py-3 rounded-full shadow hover:shadow-lg transition-all"
+            className="bg-violet-600 hover:bg-violet-700 text-white dark:text-white font-semibold px-6 py-3 rounded-full shadow hover:shadow-lg transition-all"
             href="/curriculo"
             style={{ color: '#ffffff' }}
           >
