@@ -6,16 +6,11 @@ import {
   adicionarExperiencia,
   adicionarFormacao,
 } from './services';
-import { verificarPagamento } from '../Payment/services';
 
 /**
  * Hook customizado para gerenciar o formulário de currículo
  */
 export const useCurriculoForm = () => {
-  // Estado de pagamento
-  const [pagamentoAtivo, setPagamentoAtivo] = useState(false);
-  const [verificandoPagamento, setVerificandoPagamento] = useState(true);
-
   // Estados para dados pessoais
   const [dadosPessoais, setDadosPessoais] = useState({
     nome: '',
@@ -35,21 +30,6 @@ export const useCurriculoForm = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
-
-  // Verificar pagamento ao montar o componente
-  useEffect(() => {
-    async function checkPagamento() {
-      try {
-        const resultado = await verificarPagamento();
-        setPagamentoAtivo(resultado);
-      } catch (err) {
-        console.error('Erro ao verificar pagamento:', err);
-      } finally {
-        setVerificandoPagamento(false);
-      }
-    }
-    checkPagamento();
-  }, []);
 
   /**
    * Atualiza campo de dados pessoais
@@ -113,15 +93,6 @@ export const useCurriculoForm = () => {
     try {
       setLoading(true);
       setError('');
-
-      // Verificar se o usuário pagou
-      if (!pagamentoAtivo) {
-        setError('Você precisa fazer o pagamento para baixar o currículo completo');
-        setTimeout(() => {
-          window.location.href = '/pagamento';
-        }, 2000);
-        return;
-      }
       
       // Preparar dados para o PDF
       const dadosCompletos = {
@@ -180,11 +151,7 @@ export const useCurriculoForm = () => {
       const url = window.URL.createObjectURL(pdfBlob);
       window.open(url, '_blank');
       
-      if (!pagamentoAtivo) {
-        setSuccess('Prévia limitada aberta! Faça o pagamento para desbloquear o currículo completo.');
-      } else {
-        setSuccess('Prévia do currículo aberta!');
-      }
+      setSuccess('Prévia do currículo aberta!');
     } catch (err) {
       setError(err.message || 'Erro ao visualizar currículo');
     } finally {
@@ -242,8 +209,6 @@ export const useCurriculoForm = () => {
     loading,
     error,
     success,
-    pagamentoAtivo,
-    verificandoPagamento,
 
     // Handlers
     handleDadosPessoaisChange,
