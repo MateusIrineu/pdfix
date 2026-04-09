@@ -50,14 +50,28 @@ const PORT = process.env.PORT;
 
 // Sincronizar banco de dados e iniciar servidor
 (async () => {
+  let dbConnected = false;
+  
   try {
+    console.log("Iniciando sincronização do banco de dados...");
     // Sincroniza o banco de dados (cria tabelas se não existirem)
-    await sequelize.sync({ alter: process.env.NODE_ENV === 'development' });
+    await Promise.race([
+      sequelize.sync({ alter: process.env.NODE_ENV === 'development' }),
+      new Promise((_, reject) => 
+        setTimeout(() => reject(new Error('Database sync timeout after 60s')), 60000)
+      )
+    ]);
     console.log("Banco de dados sincronizado com sucesso!");
-    
-    app.listen(PORT, () => console.log(`Servidor rodando na porta ${PORT}`));
+    dbConnected = true;
   } catch (error) {
-    console.error("Erro ao sincronizar banco de dados:", error);
-    process.exit(1);
+    console.error("Erro ao sincronizar banco de dados:", error.message);
+    console.error("Stack:", error.stack);
+    // Não fazer exit - deixar a app rodar mesmo sem BD por enquanto
+    // para ver os logs de erro
   }
+  
+  app.listen(PORT, () => {
+    console.log(`Servidor rodando na porta ${PORT}`);
+    console.log(`Database status: ${dbConnected ? 'CONECTADO' : 'DESCONECTADO'}`);
+  });
 })();
