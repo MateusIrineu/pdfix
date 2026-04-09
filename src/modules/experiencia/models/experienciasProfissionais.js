@@ -62,7 +62,7 @@ export default class experiencia_profissional extends Model {
       {
         sequelize,
         tableName: "experiencia_profissional",
-        schema: "public",
+        schema: "dbo",
         timestamps: false,
       },
     );

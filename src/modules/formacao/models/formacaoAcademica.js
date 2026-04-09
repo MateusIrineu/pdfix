@@ -66,7 +66,7 @@ export default class formacaoAcademica extends Model {
       {
         sequelize,
         tableName: "formacao_academica",
-        schema: "public",
+        schema: "dbo",
         timestamps: false,
         indexes: [
           {

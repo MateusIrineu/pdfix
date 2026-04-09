@@ -60,7 +60,7 @@ export default class dadosPessoais extends Model {
       {
         sequelize,
         tableName: "dados_pessoais",
-        schema: "public",
+        schema: "dbo",
         timestamps: false,
         indexes: [
           {

@@ -46,7 +46,7 @@ export default class usuario extends Model {
       {
         sequelize,
         tableName: "usuario",
-        schema: "public",
+        schema: "dbo",
         timestamps: false,
         indexes: [
           {

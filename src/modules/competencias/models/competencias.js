@@ -49,7 +49,7 @@ export default class competencias extends Model {
       {
         sequelize,
         tableName: "competencias",
-        schema: "public",
+        schema: "dbo",
         timestamps: false,
         indexes: [
           {
