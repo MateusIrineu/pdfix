@@ -1,6 +1,9 @@
 // Importa o framework Express, que facilita criar servidores web em Node.js
 import express from "express";
 
+// Importa o Sequelize e banco de dados
+import { sequelize } from "./database/index.js";
+
 // Importa o CORS, que permite que diferentes domínios acessem a API
 import cors from "cors";
 import dotenv from "dotenv";
@@ -19,10 +22,15 @@ import { webhookRouter, stripeRouter } from "./modules/stripe/routes/stripe_even
 const app = express();
 
 // Configuração do CORS
-const corsOrigin = process.env.CORS_ORIGIN
+const corsOptions = {
+  origin: process.env.CORS_ORIGIN || "http://localhost:3000",
+  credentials: true,
+  methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization']
+};
 
 // Habilita o CORS
-app.use(cors({ origin: corsOrigin }));
+app.use(cors(corsOptions));
 
 app.use('/stripe', webhookRouter);
 // Permite ler JSON
@@ -39,4 +47,17 @@ app.use("/api/dados-pessoais", dadosPessoaisRoutes);
 
 // Porta do servidor
 const PORT = process.env.PORT;
-app.listen(PORT, () => console.log(`Servidor rodando na porta ${PORT}`));
+
+// Sincronizar banco de dados e iniciar servidor
+(async () => {
+  try {
+    // Sincroniza o banco de dados (cria tabelas se não existirem)
+    await sequelize.sync({ alter: process.env.NODE_ENV === 'development' });
+    console.log("Banco de dados sincronizado com sucesso!");
+    
+    app.listen(PORT, () => console.log(`Servidor rodando na porta ${PORT}`));
+  } catch (error) {
+    console.error("Erro ao sincronizar banco de dados:", error);
+    process.exit(1);
+  }
+})();

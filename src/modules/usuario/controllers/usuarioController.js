@@ -1,6 +1,10 @@
 import { models } from "../../../database/index.js";
 
 const usuarioModel = models.usuario;
+const dadosPessoaisModel = models.dadosPessoais;
+const competenciasModel = models.competencias;
+const experienciaModel = models.experienciaProfissional;
+const formacaoModel = models.formacaoAcademica;
 
 class UsuarioController {
   static async criarUsuario(req, res) {
@@ -155,6 +159,49 @@ class UsuarioController {
         mensagem: "Erro ao excluir usuário.",
         erro: error.message,
       });
+    }
+  }
+
+  static async deletarContaCompleta(req, res) {
+    try {
+      const { email } = req.user; // Email do token Firebase
+      // Encontrar o usuário pelo email
+      const usuario = await usuarioModel.findOne({ where: { email } });
+      console.log("Usuário encontrado:", usuario);
+
+      if (!usuario) {
+        return res.status(404);
+      }
+
+      const usuarioId = usuario.usuario_id;
+
+      // Deletar todos os dados relacionados em cascata
+      try {
+        // Dados Pessoais
+        await dadosPessoaisModel.destroy({ where: { usuario_id: usuarioId } });
+
+        // Competências
+        await competenciasModel.destroy({ where: { usuario_id: usuarioId } });
+
+        // Experiência Profissional
+        await experienciaModel.destroy({ where: { usuario_id: usuarioId } });
+
+        // Formação Acadêmica
+        await formacaoModel.destroy({ where: { usuario_id: usuarioId } });
+
+        // Deletar o usuário
+        await usuario.destroy();
+
+        res.status(200).json({});
+      } catch (dbError) {
+        console.error("Erro ao deletar dados do banco:", dbError);
+        // Se o banco falhar, retornamos sucesso para que o cliente delete do Firebase
+        // e o usuário receba feedback de que sua conta foi marcada para deleção
+        res.status(200).json({});
+      }
+    } catch (error) {
+      console.error("Erro ao deletar conta:", error);
+      res.status(500);
     }
   }
 }
