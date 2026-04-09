@@ -25,13 +25,6 @@ export default function Footer() {
           >
             Termos de Uso
           </Link>
-          <span className="text-[var(--color-text-light)]">•</span>
-          <Link 
-            href="/dados-usuario" 
-            className="text-[var(--color-text-light)] hover:text-violet-600 transition-colors"
-          >
-            Seus Dados
-          </Link>
         </div>
 
         {/* Copyright */}
