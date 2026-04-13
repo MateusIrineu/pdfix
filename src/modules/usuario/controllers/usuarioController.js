@@ -215,11 +215,14 @@ class UsuarioController {
         message: error.message,
         stack: error.stack,
         code: error.code,
+        errors: error.errors, // Erros de validação do Sequelize
+        original: error.original, // Erro original do banco
       });
       res.status(500).json({
         mensagem: "Erro ao processar login",
         erro: error.message,
         code: error.code,
+        validationErrors: error.errors,
       });
     }
   }
