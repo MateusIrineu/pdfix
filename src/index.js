@@ -28,8 +28,14 @@ const app = express();
 const allowedOrigins = (
   process.env.CORS_ORIGIN || "http://localhost:3000"
 ).split(",").map(origin => origin.trim());
+
+console.log("CORS_ORIGIN configurado:", process.env.CORS_ORIGIN);
+console.log("Origins permitidos (após trim):", allowedOrigins);
+
 const corsOptions = {
   origin: function (origin, callback) {
+    console.log("Origem recebida:", origin);
+    console.log("Permitida?", !origin || allowedOrigins.includes(origin));
     // Permitir requisições sem origin (como mobile apps ou curl requests)
     if (!origin || allowedOrigins.includes(origin)) {
       callback(null, true);
