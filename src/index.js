@@ -29,13 +29,8 @@ const allowedOrigins = (process.env.CORS_ORIGIN || "http://localhost:3000")
   .split(",")
   .map((origin) => origin.trim());
 
-console.log("CORS_ORIGIN configurado:", process.env.CORS_ORIGIN);
-console.log("Origins permitidos (após trim):", allowedOrigins);
-
 const corsOptions = {
   origin: function (origin, callback) {
-    console.log("Origem recebida:", origin);
-    console.log("Permitida?", !origin || allowedOrigins.includes(origin));
     // Permitir requisições sem origin (como mobile apps ou curl requests)
     if (!origin || allowedOrigins.includes(origin)) {
       callback(null, true);
@@ -72,22 +67,16 @@ const PORT = process.env.PORT;
   let dbConnected = false;
 
   try {
-    console.log("Testando conexão com o banco de dados...");
-
     // Primeiro, testa a autenticação
     await sequelize.authenticate();
-    console.log(" Conexão com banco de dados estabelecida!");
 
     // ANTES de sincronizar, remover constraints problemáticas
     try {
-      console.log("Removendo constraints UNIQUE problemáticos...");
       await sequelize.query(`ALTER TABLE usuarios DROP CONSTRAINT UQ__usuarios__6331C661A0FA653D`).catch(() => {});
-      console.log("✓ Constraint removido");
     } catch (err) {
       // Ignorar erro se não existir
     }
 
-    console.log("Iniciando sincronização do banco de dados...");
     // Sincroniza o banco de dados (cria tabelas se não existirem)
     await Promise.race([
       sequelize.sync({ alter: process.env.NODE_ENV === "development" }),
@@ -98,24 +87,13 @@ const PORT = process.env.PORT;
         ),
       ),
     ]);
-    console.log("Banco de dados sincronizado com sucesso!");
 
     dbConnected = true;
   } catch (error) {
-    console.error(" Erro ao conectar/sincronizar banco de dados:");
-    console.error("   Mensagem:", error.message);
-    console.error("   Código:", error.code);
-    if (error.original) {
-      console.error("   Erro original:", error.original.message);
-    }
-    // Não fazer exit - deixar a app rodar mesmo sem BD por enquanto
-    // para ver os logs de erro
+    // Erro ao conectar/sincronizar banco de dados
   }
 
   app.listen(PORT, () => {
-    console.log(`Servidor rodando na porta ${PORT}`);
-    console.log(
-      `Database status: ${dbConnected ? " CONECTADO" : " DESCONECTADO"}`,
-    );
+    // Servidor iniciado
   });
 })();
