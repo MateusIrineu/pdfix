@@ -260,7 +260,7 @@ class UsuarioController {
     } catch (error) {
       res
         .status(500)
-        .json({ erro: "Erro ao deletar conta", detalhes: error.message });}
+        .json({ erro: "Erro ao deletar conta", detalhes: error.message });
     }
   }
 }
