@@ -90,6 +90,20 @@ const PORT = process.env.PORT;
       ),
     ]);
     console.log("Banco de dados sincronizado com sucesso!");
+    
+    // Remove constraints UNIQUE de campos nullable que causam erro
+    try {
+      await sequelize.query(`
+        ALTER TABLE usuarios DROP CONSTRAINT IF EXISTS UQ__usuarios__firebase_uid;
+      `).catch(() => {});
+      await sequelize.query(`
+        ALTER TABLE usuarios DROP CONSTRAINT IF EXISTS UQ__usuarios__stripe_costumer_id;
+      `).catch(() => {});
+      console.log("Constraints desnecessários removidos com sucesso!");
+    } catch (constraintError) {
+      console.log("Info: Constraints já foram removidos ou não existem");
+    }
+    
     dbConnected = true;
   } catch (error) {
     console.error(" Erro ao conectar/sincronizar banco de dados:");
