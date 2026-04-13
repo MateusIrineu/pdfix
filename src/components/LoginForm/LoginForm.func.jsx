@@ -34,7 +34,7 @@ export const useLoginForm = () => {
 
       // 3. Chamar o backend para salvar no banco de dados
       const response = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL}/usuarios/firebase/login`,
+        `${process.env.NEXT_PUBLIC_API_URL}/api/usuarios/firebase/login`,
         {
           method: "POST",
           headers: {
