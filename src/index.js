@@ -25,9 +25,9 @@ import {
 const app = express();
 
 // Configuração do CORS
-const allowedOrigins = (
-  process.env.CORS_ORIGIN || "http://localhost:3000"
-).split(",").map(origin => origin.trim());
+const allowedOrigins = (process.env.CORS_ORIGIN || "http://localhost:3000")
+  .split(",")
+  .map((origin) => origin.trim());
 
 console.log("CORS_ORIGIN configurado:", process.env.CORS_ORIGIN);
 console.log("Origins permitidos (após trim):", allowedOrigins);
@@ -78,6 +78,15 @@ const PORT = process.env.PORT;
     await sequelize.authenticate();
     console.log(" Conexão com banco de dados estabelecida!");
 
+    // ANTES de sincronizar, remover constraints problemáticas
+    try {
+      console.log("Removendo constraints UNIQUE problemáticos...");
+      await sequelize.query(`ALTER TABLE usuarios DROP CONSTRAINT UQ__usuarios__6331C661A0FA653D`).catch(() => {});
+      console.log("✓ Constraint removido");
+    } catch (err) {
+      // Ignorar erro se não existir
+    }
+
     console.log("Iniciando sincronização do banco de dados...");
     // Sincroniza o banco de dados (cria tabelas se não existirem)
     await Promise.race([
@@ -90,47 +99,7 @@ const PORT = process.env.PORT;
       ),
     ]);
     console.log("Banco de dados sincronizado com sucesso!");
-    
-    // Remove constraints UNIQUE de campos nullable que causam erro
-    try {
-      console.log("Removendo constraints UNIQUE em campos nullable...");
-      
-      // Remover constraint firebase_uid
-      try {
-        await sequelize.query(`
-          DECLARE @constraintName NVARCHAR(128);
-          SELECT @constraintName = CONSTRAINT_NAME 
-          FROM INFORMATION_SCHEMA.TABLE_CONSTRAINTS 
-          WHERE TABLE_NAME = 'usuarios' AND COLUMN_NAME = 'firebase_uid' AND CONSTRAINT_TYPE = 'UNIQUE';
-          
-          IF @constraintName IS NOT NULL
-            EXEC ('ALTER TABLE usuarios DROP CONSTRAINT ' + @constraintName);
-        `);
-        console.log("✓ Constraint firebase_uid removido");
-      } catch (err) {
-        console.log("Info: firebase_uid constraint - ", err.message);
-      }
-      
-      // Remover constraint stripe_costumer_id
-      try {
-        await sequelize.query(`
-          DECLARE @constraintName NVARCHAR(128);
-          SELECT @constraintName = CONSTRAINT_NAME 
-          FROM INFORMATION_SCHEMA.TABLE_CONSTRAINTS 
-          WHERE TABLE_NAME = 'usuarios' AND COLUMN_NAME = 'stripe_costumer_id' AND CONSTRAINT_TYPE = 'UNIQUE';
-          
-          IF @constraintName IS NOT NULL
-            EXEC ('ALTER TABLE usuarios DROP CONSTRAINT ' + @constraintName);
-        `);
-        console.log("✓ Constraint stripe_costumer_id removido");
-      } catch (err) {
-        console.log("Info: stripe_costumer_id constraint - ", err.message);
-      }
-      
-    } catch (constraintError) {
-      console.error("Erro geral ao remover constraints:", constraintError.message);
-    }
-    
+
     dbConnected = true;
   } catch (error) {
     console.error(" Erro ao conectar/sincronizar banco de dados:");
