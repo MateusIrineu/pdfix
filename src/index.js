@@ -27,7 +27,7 @@ const app = express();
 // Configuração do CORS
 const allowedOrigins = (
   process.env.CORS_ORIGIN || "http://localhost:3000"
-).split(",");
+).split(",").map(origin => origin.trim());
 const corsOptions = {
   origin: function (origin, callback) {
     // Permitir requisições sem origin (como mobile apps ou curl requests)
