@@ -52,7 +52,6 @@ export const useLoginForm = () => {
       }
 
       const userData = await response.json();
-      console.log("✅ Usuário salvo no banco:", userData);
 
       // Salvar usuario_id do banco se for diferente
       if (userData.usuario?.usuario_id) {

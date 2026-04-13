@@ -314,7 +314,7 @@ export const gerarPDF = async (usuarioId) => {
   try {
     const token = localStorage.getItem('token');
     
-    const response = await fetch(`${API_URL}/curriculo/gerar-pdf/${usuarioId}`, {
+    const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/curriculo/gerar-pdf/${usuarioId}`, {
       method: 'GET',
       headers: {
         'Authorization': `Bearer ${token}`
