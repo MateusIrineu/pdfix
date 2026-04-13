@@ -93,15 +93,42 @@ const PORT = process.env.PORT;
     
     // Remove constraints UNIQUE de campos nullable que causam erro
     try {
-      await sequelize.query(`
-        ALTER TABLE usuarios DROP CONSTRAINT IF EXISTS UQ__usuarios__firebase_uid;
-      `).catch(() => {});
-      await sequelize.query(`
-        ALTER TABLE usuarios DROP CONSTRAINT IF EXISTS UQ__usuarios__stripe_costumer_id;
-      `).catch(() => {});
-      console.log("Constraints desnecessários removidos com sucesso!");
+      console.log("Removendo constraints UNIQUE em campos nullable...");
+      
+      // Remover constraint firebase_uid
+      try {
+        await sequelize.query(`
+          DECLARE @constraintName NVARCHAR(128);
+          SELECT @constraintName = CONSTRAINT_NAME 
+          FROM INFORMATION_SCHEMA.TABLE_CONSTRAINTS 
+          WHERE TABLE_NAME = 'usuarios' AND COLUMN_NAME = 'firebase_uid' AND CONSTRAINT_TYPE = 'UNIQUE';
+          
+          IF @constraintName IS NOT NULL
+            EXEC ('ALTER TABLE usuarios DROP CONSTRAINT ' + @constraintName);
+        `);
+        console.log("✓ Constraint firebase_uid removido");
+      } catch (err) {
+        console.log("Info: firebase_uid constraint - ", err.message);
+      }
+      
+      // Remover constraint stripe_costumer_id
+      try {
+        await sequelize.query(`
+          DECLARE @constraintName NVARCHAR(128);
+          SELECT @constraintName = CONSTRAINT_NAME 
+          FROM INFORMATION_SCHEMA.TABLE_CONSTRAINTS 
+          WHERE TABLE_NAME = 'usuarios' AND COLUMN_NAME = 'stripe_costumer_id' AND CONSTRAINT_TYPE = 'UNIQUE';
+          
+          IF @constraintName IS NOT NULL
+            EXEC ('ALTER TABLE usuarios DROP CONSTRAINT ' + @constraintName);
+        `);
+        console.log("✓ Constraint stripe_costumer_id removido");
+      } catch (err) {
+        console.log("Info: stripe_costumer_id constraint - ", err.message);
+      }
+      
     } catch (constraintError) {
-      console.log("Info: Constraints já foram removidos ou não existem");
+      console.error("Erro geral ao remover constraints:", constraintError.message);
     }
     
     dbConnected = true;
