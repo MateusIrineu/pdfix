@@ -5,61 +5,54 @@ export default class usuario extends Model {
   static init(sequelize, DataTypes) {
     return super.init(
       {
-        usuario_id: {
+        id: {
           type: DataTypes.UUID,
           defaultValue: DataTypes.UUIDV4,
           allowNull: false,
           primaryKey: true,
         },
-        nome: {
-          type: DataTypes.STRING(255),
-          allowNull: false,
-        },
         email: {
-          type: DataTypes.STRING(255),
+          type: DataTypes.STRING,
           allowNull: false,
-          unique: "usuario_email_key",
+          unique: true,
         },
-        
-        stripeCustomerId: {
+        nome: {
           type: DataTypes.STRING,
           allowNull: true,
-          unique: true
         },
-
-        criado_em: {
+        firebase_uid: {
+          type: DataTypes.STRING,
+          allowNull: true,
+          unique: true,
+        },
+        stripe_costumer_id: {
+          type: DataTypes.STRING,
+          allowNull: true,
+          unique: true,
+        },
+        createdAt: {
+          type: DataTypes.DATE,
+          allowNull: false,
+          defaultValue: Sequelize.NOW,
+        },
+        updatedAt: {
+          type: DataTypes.DATE,
+          allowNull: false,
+          defaultValue: Sequelize.NOW,
+        },
+        deletedAt: {
           type: DataTypes.DATE,
           allowNull: true,
-          defaultValue: Sequelize.Sequelize.literal("CURRENT_TIMESTAMP"),
-        },
-        atualizado_em: {
-          type: DataTypes.DATE,
-          allowNull: true,
-          defaultValue: Sequelize.Sequelize.literal("CURRENT_TIMESTAMP"),
-        },
-        deletado_em: {
-          type: DataTypes.DATE,
-          allowNull: true,
-          defaultValue: Sequelize.Sequelize.literal("CURRENT_TIMESTAMP"),
+          defaultValue: null,
         },
       },
       {
         sequelize,
-        tableName: "usuario",
-        schema: "dbo",
-        timestamps: false,
-        indexes: [
-          {
-            name: "usuario_email_key",
-            unique: true,
-            fields: [{ name: "email" }],
-          },
-          {
-            name: "usuario_pkey",
-            unique: true,
-            fields: [{ name: "usuario_id" }],
-          },
-        ],
+        tableName: "usuarios",
+        timestamps: true,
+        underscored: false,
+        createdAt: "createdAt",
+        updatedAt: "updatedAt",
       },
     );
   }

@@ -15,8 +15,8 @@ export default class competencias extends Model {
           type: DataTypes.UUID,
           allowNull: false,
           references: {
-            model: "usuario",
-            key: "usuario_id",
+            model: "usuarios",
+            key: "id",
           },
         },
         nome_competencia: {
@@ -49,7 +49,6 @@ export default class competencias extends Model {
       {
         sequelize,
         tableName: "competencias",
-        schema: "dbo",
         timestamps: false,
         indexes: [
           {

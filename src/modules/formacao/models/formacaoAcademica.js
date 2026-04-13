@@ -15,8 +15,8 @@ export default class formacaoAcademica extends Model {
           type: DataTypes.UUID,
           allowNull: false,
           references: {
-            model: "usuario",
-            key: "usuario_id",
+            model: "usuarios",
+            key: "id",
           },
         },
         instituicao: {
@@ -66,7 +66,6 @@ export default class formacaoAcademica extends Model {
       {
         sequelize,
         tableName: "formacao_academica",
-        schema: "dbo",
         timestamps: false,
         indexes: [
           {

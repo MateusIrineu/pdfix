@@ -15,8 +15,8 @@ export default class dadosPessoais extends Model {
           type: DataTypes.UUID,
           allowNull: false,
           references: {
-            model: "usuario",
-            key: "usuario_id",
+            model: "usuarios",
+            key: "id",
           },
         },
         nome: {
@@ -60,7 +60,6 @@ export default class dadosPessoais extends Model {
       {
         sequelize,
         tableName: "dados_pessoais",
-        schema: "dbo",
         timestamps: false,
         indexes: [
           {

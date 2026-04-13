@@ -15,8 +15,8 @@ export default class experiencia_profissional extends Model {
           type: DataTypes.UUID,
           allowNull: true,
           references: {
-            model: "usuario",
-            key: "usuario_id",
+            model: "usuarios",
+            key: "id",
           },
         },
         titulo_cargo: {
@@ -62,7 +62,6 @@ export default class experiencia_profissional extends Model {
       {
         sequelize,
         tableName: "experiencia_profissional",
-        schema: "dbo",
         timestamps: false,
       },
     );

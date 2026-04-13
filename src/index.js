@@ -16,23 +16,36 @@ import formacaoRoutes from "./modules/formacao/routes/formacaoRoute.js";
 import competenciasRoutes from "./modules/competencias/routes/competenciasRoute.js";
 import dadosPessoaisRoutes from "./modules/dadosPessoais/routes/dadosPessoaisRoute.js";
 import healthRoutes from "./routes/healthRoute.js";
-import { webhookRouter, stripeRouter } from "./modules/stripe/routes/stripe_event.routes.js";
+import {
+  webhookRouter,
+  stripeRouter,
+} from "./modules/stripe/routes/stripe_event.routes.js";
 
 // Cria a aplicação Express
 const app = express();
 
 // Configuração do CORS
+const allowedOrigins = (
+  process.env.CORS_ORIGIN || "http://localhost:3000"
+).split(",");
 const corsOptions = {
-  origin: process.env.CORS_ORIGIN || "http://localhost:3000",
+  origin: function (origin, callback) {
+    // Permitir requisições sem origin (como mobile apps ou curl requests)
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error("Not allowed by CORS"));
+    }
+  },
   credentials: true,
-  methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
-  allowedHeaders: ['Content-Type', 'Authorization']
+  methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
+  allowedHeaders: ["Content-Type", "Authorization"],
 };
 
 // Habilita o CORS
 app.use(cors(corsOptions));
 
-app.use('/stripe', webhookRouter);
+app.use("/stripe", webhookRouter);
 // Permite ler JSON
 app.use(express.json());
 
@@ -51,27 +64,42 @@ const PORT = process.env.PORT;
 // Sincronizar banco de dados e iniciar servidor
 (async () => {
   let dbConnected = false;
-  
+
   try {
+    console.log("Testando conexão com o banco de dados...");
+
+    // Primeiro, testa a autenticação
+    await sequelize.authenticate();
+    console.log(" Conexão com banco de dados estabelecida!");
+
     console.log("Iniciando sincronização do banco de dados...");
     // Sincroniza o banco de dados (cria tabelas se não existirem)
     await Promise.race([
-      sequelize.sync({ alter: process.env.NODE_ENV === 'development' }),
-      new Promise((_, reject) => 
-        setTimeout(() => reject(new Error('Database sync timeout after 60s')), 60000)
-      )
+      sequelize.sync({ alter: process.env.NODE_ENV === "development" }),
+      new Promise((_, reject) =>
+        setTimeout(
+          () => reject(new Error("Database sync timeout after 60s")),
+          60000,
+        ),
+      ),
     ]);
     console.log("Banco de dados sincronizado com sucesso!");
     dbConnected = true;
   } catch (error) {
-    console.error("Erro ao sincronizar banco de dados:", error.message);
-    console.error("Stack:", error.stack);
+    console.error(" Erro ao conectar/sincronizar banco de dados:");
+    console.error("   Mensagem:", error.message);
+    console.error("   Código:", error.code);
+    if (error.original) {
+      console.error("   Erro original:", error.original.message);
+    }
     // Não fazer exit - deixar a app rodar mesmo sem BD por enquanto
     // para ver os logs de erro
   }
-  
+
   app.listen(PORT, () => {
     console.log(`Servidor rodando na porta ${PORT}`);
-    console.log(`Database status: ${dbConnected ? 'CONECTADO' : 'DESCONECTADO'}`);
+    console.log(
+      `Database status: ${dbConnected ? " CONECTADO" : " DESCONECTADO"}`,
+    );
   });
 })();
