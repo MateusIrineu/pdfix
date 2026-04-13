@@ -211,9 +211,15 @@ class UsuarioController {
         },
       });
     } catch (error) {
+      console.error("Erro completo no login Firebase:", {
+        message: error.message,
+        stack: error.stack,
+        code: error.code,
+      });
       res.status(500).json({
         mensagem: "Erro ao processar login",
         erro: error.message,
+        code: error.code,
       });
     }
   }
