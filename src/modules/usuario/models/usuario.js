@@ -23,12 +23,10 @@ export default class usuario extends Model {
         firebase_uid: {
           type: DataTypes.STRING,
           allowNull: true,
-          unique: true,
         },
         stripe_costumer_id: {
           type: DataTypes.STRING,
           allowNull: true,
-          unique: true,
         },
         createdAt: {
           type: DataTypes.DATE,
