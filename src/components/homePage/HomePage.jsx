@@ -1,4 +1,4 @@
-'use client';
+"use client";
 
 import React from "react";
 import Link from "next/link";
@@ -33,7 +33,7 @@ export default function HomePage() {
           <Link
             className="bg-violet-600 hover:bg-violet-700 text-white dark:text-white font-semibold px-6 py-3 rounded-full shadow hover:shadow-lg transition-all"
             href="/curriculo"
-            style={{ color: '#ffffff' }}
+            style={{ color: "#ffffff" }}
           >
             Criar Currículo Grátis →
           </Link>
@@ -58,7 +58,7 @@ export default function HomePage() {
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
           <div
-            className="rounded-xl p-6 shadow-sm hover:shadow-md transition-shadow"
+            className="rounded-xl p-6 shadow-sm hover:shadow-md transition-shadow text-center flex flex-col items-center"
             style={{ backgroundColor: "var(--color-bg-card)" }}
           >
             <div className="w-12 h-12 bg-violet-500 rounded-md flex items-center justify-center text-3xl text-white mb-4">
@@ -78,7 +78,7 @@ export default function HomePage() {
             </div>
           </div>
           <div
-            className="rounded-xl p-6 shadow-sm hover:shadow-md transition-shadow"
+            className="rounded-xl p-6 shadow-sm hover:shadow-md transition-shadow text-center flex flex-col items-center"
             style={{ backgroundColor: "var(--color-bg-card)" }}
           >
             <div className="w-12 h-12 bg-violet-500 rounded-md flex items-center justify-center text-3xl text-white mb-4">
@@ -98,7 +98,7 @@ export default function HomePage() {
             </div>
           </div>
           <div
-            className="rounded-xl p-6 shadow-sm hover:shadow-md transition-shadow"
+            className="rounded-xl p-6 shadow-sm hover:shadow-md transition-shadow text-center flex flex-col items-center"
             style={{ backgroundColor: "var(--color-bg-card)" }}
           >
             <div className="w-12 h-12 bg-violet-500 rounded-md flex items-center justify-center text-3xl text-white mb-4">
@@ -118,7 +118,7 @@ export default function HomePage() {
             </div>
           </div>
           <div
-            className="rounded-xl p-6 shadow-sm hover:shadow-md transition-shadow"
+            className="rounded-xl p-6 shadow-sm hover:shadow-md transition-shadow text-center flex flex-col items-center"
             style={{ backgroundColor: "var(--color-bg-card)" }}
           >
             <div className="w-12 h-12 bg-violet-500 rounded-md flex items-center justify-center text-3xl text-white mb-4">
@@ -165,7 +165,10 @@ export default function HomePage() {
               ["04", "Envie", "Baixe e compartilhe"],
             ].map(([num, title, desc]) => (
               <div key={num} className="flex flex-col items-center gap-3">
-                <div className="w-14 h-14 rounded-full bg-violet-600 flex items-center justify-center font-bold shadow-md" style={{ color: '#ffffff' }}>
+                <div
+                  className="w-14 h-14 rounded-full bg-violet-600 flex items-center justify-center font-bold shadow-md"
+                  style={{ color: "#ffffff" }}
+                >
                   {num}
                 </div>
                 <div
@@ -196,7 +199,7 @@ export default function HomePage() {
             <Link
               className="bg-white text-violet-600 dark:text-white px-6 py-3 rounded-full shadow font-bold hover:bg-violet-100 hover:!text-white hover:shadow-lg hover:scale-105 transition-all duration-300"
               href="/curriculo"
-              style={{ color: '#8b5cf6' }}
+              style={{ color: "#8b5cf6" }}
             >
               Criar Meu Primeiro Currículo →
             </Link>

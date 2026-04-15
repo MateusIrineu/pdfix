@@ -1,30 +1,31 @@
-'use client';
+"use client";
 
-import Link from 'next/link';
-import { useLoginForm } from './LoginForm.func';
+import Link from "next/link";
+import Image from "next/image";
+import { useLoginForm } from "./LoginForm.func";
 
 export default function LoginForm() {
-  const {
-    loading,
-    error,
-    handleGoogleLogin,
-  } = useLoginForm();
+  const { loading, error, handleGoogleLogin } = useLoginForm();
 
   return (
     <div className="bg-[var(--color-bg-card)] border border-[var(--color-border)] rounded-2xl shadow-xl p-12 max-w-md w-full transition-colors duration-300">
       {/* Header */}
       <div className="text-center mb-8">
         <div className="flex items-center justify-center gap-3 mb-6">
-          <div className="w-12 h-12 bg-gradient-to-br from-[#7c3aed] to-[#a78bfa] rounded-xl flex items-center justify-center text-white">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-              <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" fill="currentColor"/>
-              <polyline points="14,2 14,8 20,8" fill="currentColor"/>
-            </svg>
-          </div>
-          <span className="text-2xl font-bold text-[var(--color-text)]">PDFix</span>
+          <Image
+            src="/assets/logo2.png"
+            alt="PDFix Logo"
+            width={150}
+            height={150}
+            className="rounded-lg"
+          />
         </div>
-        <h1 className="text-3xl font-bold text-[var(--color-text)] mb-2">Bem-vindo de volta!</h1>
-        <p className="text-[var(--color-text-light)]">Entre com sua conta Google</p>
+        <h1 className="text-3xl font-bold text-[var(--color-text)] mb-2">
+          Bem-vindo de volta!
+        </h1>
+        <p className="text-[var(--color-text-light)]">
+          Entre com sua conta Google
+        </p>
       </div>
 
       {/* Error Message */}
@@ -43,9 +44,25 @@ export default function LoginForm() {
       >
         {loading ? (
           <>
-            <svg className="animate-spin h-5 w-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-              <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-              <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+            <svg
+              className="animate-spin h-5 w-5"
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+            >
+              <circle
+                className="opacity-25"
+                cx="12"
+                cy="12"
+                r="10"
+                stroke="currentColor"
+                strokeWidth="4"
+              ></circle>
+              <path
+                className="opacity-75"
+                fill="currentColor"
+                d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+              ></path>
             </svg>
             <span>Entrando...</span>
           </>
@@ -84,9 +101,9 @@ export default function LoginForm() {
       {/* Sign Up Link */}
       <div className="text-center">
         <p className="text-sm text-[var(--color-text-light)]">
-          Não tem uma conta?{' '}
-          <Link 
-            href="/curriculo" 
+          Não tem uma conta?{" "}
+          <Link
+            href="/curriculo"
             className="text-[#7c3aed] font-semibold hover:text-[#6d28d9] transition-colors duration-200"
           >
             Comece agora grátis

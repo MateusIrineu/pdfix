@@ -31,6 +31,12 @@ html.dark a[class*="bg-violet"] {
   color: #ffffff !important;
 }
 
+/* Ícones SVG brancos no modo escuro dentro dos cards */
+html.dark .bg-violet-500 svg {
+  color: #ffffff !important;
+  stroke: #ffffff !important;
+}
+
 html {
   scroll-behavior: smooth;
   background-color: var(--color-bg);
