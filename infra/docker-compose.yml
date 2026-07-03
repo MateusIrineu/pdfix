@@ -1,0 +1,35 @@
+version: '3.8'
+services:
+  db:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    environment:
+      ACCEPT_EULA: Y
+      SA_PASSWORD: "YourStrong!Passw0rd"
+      MSSQL_PID: "Express"
+    ports:
+      - "1433:1433"
+    volumes:
+      - db_data:/var/opt/mssql
+
+  backend:
+    build: ../Projeto-Pdfix-backend
+    ports:
+      - "3001:3000"
+    environment:
+      DB_HOST: db
+      DB_PORT: 1433
+      DB_USER: sa
+      DB_PASS: YourStrong!Passw0rd
+      DB_NAME: appdb
+    depends_on:
+      - db
+
+  frontend:
+    build: ../Projeto-pdfix-frontend
+    ports:
+      - "3000:3000"
+    depends_on:
+      - backend
+
+volumes:
+  db_data:
