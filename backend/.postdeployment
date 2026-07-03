@@ -1,0 +1,17 @@
+#!/bin/bash
+
+echo "Post-deployment hook started at $(date)"
+echo "Current directory: $(pwd)"
+
+# Instalar dependências se não existirem
+if [ ! -d "node_modules" ]; then
+  echo "node_modules not found, installing dependencies..."
+  npm install --production
+else
+  echo "node_modules found, updating dependencies..."
+  npm ci --production
+fi
+
+echo "Dependencies ready!"
+echo "Directory listing:"
+ls -la | grep -E "^d|package"
